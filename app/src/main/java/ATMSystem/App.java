@@ -5,10 +5,12 @@ package ATMSystem;
 
 public class App {
     public String getGreeting() {
-        return "Hello World!";
+        return "XYZ Bank ATM";
     }
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        ATM x = new ATM(1000);
+        System.out.println(x.getCash());
     }
 }
