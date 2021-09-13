@@ -98,22 +98,40 @@ public class App {
 
                     // The card id valid, ask user to choose a service.
                     // Print the services options
-                    System.out.print("Please choose a service:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
-                    // Get the input (user got 120s to choose)
-                    String service = app.timer();
-                    if(service == null) {
-                        System.err.println("Time out!");
-                        System.out.println("Returning to the main page...");
-                        Thread.sleep(3000);
-                        break;
-                    }
                     boolean isContinue = true;
                     while(isContinue) {
+                        System.out.print("Please choose a service:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
+                        // Get the input (user got 120s to choose)
+                        String service = app.timer();
+                        if (service == null) {
+                            System.err.println("Time out!");
+                            System.out.println("Returning to the main page...");
+                            Thread.sleep(3000);
+                            break;
+                        }
                         switch (service) {
                             case "1":
+                                System.out.println("Please enter the amount you want to withdraw:");
+                                String withdraw = app.timer();
+                                if (withdraw == null) {
+                                    System.err.println("Time out!");
+                                    System.out.println("Returning to the main page...");
+                                    Thread.sleep(3000);
+                                    break;
+                                }
+                                atm.withdraw(Double.parseDouble(withdraw));
 
                                 break;
                             case "2":
+                                System.out.println("Please enter the amount you want to deposit:");
+                                String deposit = app.timer();
+                                if (deposit == null) {
+                                    System.err.println("Time out!");
+                                    System.out.println("Returning to the main page...");
+                                    Thread.sleep(3000);
+                                    break;
+                                }
+                                atm.deposit(Double.parseDouble(deposit));
 
                                 break;
                             case "3":
@@ -121,7 +139,7 @@ public class App {
                                 break;
                             case "4":
                                 System.out.println("Ejecting card...");
-                                Thread.sleep(5000);
+                                Thread.sleep(3000);
                                 System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n");
                                 Thread.sleep(3000);
                                 System.out.println("Returning to the main page...");
@@ -179,7 +197,7 @@ public class App {
         int i = 0;
         String str;
         do {
-            str = deque.poll(10, TimeUnit.SECONDS);
+            str = deque.poll(120, TimeUnit.SECONDS);
             i++;
         } while (i < 1);
 

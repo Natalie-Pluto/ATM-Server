@@ -13,9 +13,9 @@ public class ATM {
     // constructor
     public ATM(double startingCash) {
         cash = startingCash;
-        authenticated = true;
     }
 
+    // Enter > 3 times pin will block the card
     private void block() {
 
     }
@@ -58,6 +58,8 @@ public class ATM {
                 counter++;
                 if (counter > 3) {
                     isValid = false;
+                    // Block the card
+                    block();
                     System.err.println("Sorry, you have exceeded the allowed number of attempts. Your card is blocked. Please contact the staff.");
                     break;
                 }
@@ -72,6 +74,10 @@ public class ATM {
         return isValid;
     }
 
+    // 1. Check if there's enough money left to be withdraw
+    // 2. Change the card balance
+    // 3. Change the ATM balance
+    // 5. Check ATM balance
     public boolean withdraw(double amount) {
 
         return false;
@@ -85,6 +91,11 @@ public class ATM {
     public void addCash(double amount) {
         cash += amount;
     }
+
+    public void subCash(double amount) {
+        cash -= amount;
+    }
+
 
     public double getCash() {
         return cash;
