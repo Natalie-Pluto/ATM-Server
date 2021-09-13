@@ -3,14 +3,188 @@
  */
 package ATMSystem;
 
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.TimeUnit;
+
 public class App {
-    public String getGreeting() {
-        return "XYZ Bank ATM";
+
+    public static void main(String[] arg) throws InterruptedException, ParseException {
+        ATM atm = new ATM(100000);
+        App app = new App();
+        while(true) {
+            // Greetings and ask user to insert their card for validity check.
+            greetings();
+            Scanner userInput = new Scanner(System.in);
+            // If the service for an user is over, return to the greeting page.
+            boolean isServiceOver = false;
+            // Count the times of enter
+            int cardEnterCounter = 0;
+            while (!isServiceOver) {
+                // First, we ask user to enter their card number
+                String cardNumber;
+                if(cardEnterCounter == 0) {
+                    // The first user's input does not have timer
+                    cardNumber = userInput.nextLine();
+                } else {
+                    // 120s timer
+                    cardNumber = app.timer();
+                    if(cardNumber == null) {
+                        System.err.println("Time out!");
+                        System.out.println("Returning to the main page...");
+                        Thread.sleep(3000);
+                        break;
+                    }
+                }
+                // Check the format of the card number entered by user
+                if (cardNumber.length() != 5 || !cardNumber.chars().allMatch(Character::isDigit)) {
+                    cardEnterCounter++;
+                    // User only allowed to enter 5 times
+                    if (cardEnterCounter > 4) {
+                        System.err.println("Exceed the enter limit, please contact the front desk to check on your card number.");
+                        Thread.sleep(5000);
+                        System.out.println("Returning to the main page...");
+                        Thread.sleep(3000);
+                        break;
+                    }
+                    System.err.println("Invalid card number. Please enter the card number again:");
+                } else {
+                    // The format of card number entered is correct, now check card validity.
+                    // Read file
+                    String filename = "system_data.txt";
+                    // Store the data in the file
+                    String[] inputs = null;
+                    boolean isCardExist = false;
+                    // Open the and read the file
+                    try {
+                        String input;
+                        File file = new File(filename);
+                        BufferedReader br = new BufferedReader(new FileReader(file));
+                        while ((input = br.readLine()) != null) {
+                            String[] inputSplit = input.split("\\s+");
+                            // Check if the card exists.
+                            if (inputSplit[0].equals(cardNumber)) {
+                                isCardExist = true;
+                                inputs = inputSplit;
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.err.printf("The file <%s> is not readable.\n", filename);
+                        e.printStackTrace();
+                    }
+                    // If card not exists, output error msg to stderr and return to greeting page.
+                    if(!isCardExist) {
+                        System.err.println("Sorry, this card is not recorded in our system.\nPlease contact the staff.\n");
+                        Thread.sleep(5000);
+                        System.out.println("Returning to the main page...");
+                        Thread.sleep(3000);
+                        break;
+                    } else {
+                        // Further card checking
+                        boolean correctCardinfo = false;
+                        Date issueDate = new SimpleDateFormat("dd-MM-yyyy").parse(inputs[1]);
+                        Date expDate = new SimpleDateFormat("dd-MM-yyyy").parse(inputs[2]);
+                        correctCardinfo = atm.authentication(issueDate, expDate, inputs[5], inputs[6], inputs[3]);
+                        if (!correctCardinfo) {
+                            System.out.println("Returning to the main page...");
+                            Thread.sleep(3000);
+                            break;
+                        }
+                    }
+
+                    // The card id valid, ask user to choose a service.
+                    // Print the services options
+                    System.out.print("Please choose a service:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
+                    // Get the input (user got 120s to choose)
+                    String service = app.timer();
+                    if(service == null) {
+                        System.err.println("Time out!");
+                        System.out.println("Returning to the main page...");
+                        Thread.sleep(3000);
+                        break;
+                    }
+                    boolean isContinue = true;
+                    while(isContinue) {
+                        switch (service) {
+                            case "1":
+
+                                break;
+                            case "2":
+
+                                break;
+                            case "3":
+                                System.out.println("Your Balance is " + inputs[4]);
+                                break;
+                            case "4":
+                                System.out.println("Ejecting card...");
+                                Thread.sleep(5000);
+                                System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n");
+                                Thread.sleep(3000);
+                                System.out.println("Returning to the main page...");
+                                Thread.sleep(3000);
+                                isContinue = false;
+                                isServiceOver = true;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-        ATM x = new ATM(1000);
-        System.out.println(x.getCash());
+    // Print greeting message according to the time.
+    public static void greetings () {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        if(timeOfDay < 12){
+            System.out.println("Good Morning, welcome to XYZ Bank! Please enter your card number:");
+        }else if(timeOfDay < 16){
+            System.out.println("Good Afternoon, welcome to XYZ Bank! Please enter your card number:");
+        }else if(timeOfDay < 21){
+            System.out.println("Good Evening, welcome to XYZ Bank! Please enter your card number:");
+        }else {
+            System.out.println("Good Night, welcome to XYZ Bank! Please enter your card number:");
+        }
     }
+
+    // Set a timer of 120s for user's input
+    // Source from: https://stackoverflow.com/questions/49578598/timelimit-for-valid-java-input-without-system-exit
+    public String timer() throws InterruptedException {
+        BlockingDeque<String> deque = new LinkedBlockingDeque<>();
+
+        Thread thread = new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+            String input;
+            try {
+                do {
+                    if (System.in.available() > 0) {
+                        input = scanner.nextLine();
+                        deque.add(input);
+                    } else
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            break;
+                        }
+                } while (true);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
+        int i = 0;
+        String str;
+        do {
+            str = deque.poll(10, TimeUnit.SECONDS);
+            i++;
+        } while (i < 1);
+
+        thread.interrupt();
+        return str;
+    }
+
 }
