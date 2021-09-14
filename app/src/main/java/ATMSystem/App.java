@@ -24,7 +24,7 @@ public class App {
             boolean isServiceOver = false;
             // Count the times of enter
             int cardEnterCounter = 0;
-            while (!isServiceOver) {
+            service: while (!isServiceOver) {
                 // First, we ask user to enter their card number
                 String cardNumber;
                 if(cardEnterCounter == 0) {
@@ -46,7 +46,7 @@ public class App {
                     // User only allowed to enter 5 times
                     if (cardEnterCounter > 4) {
                         System.err.println("Exceed the enter limit, please contact the front desk to check on your card number.");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                         System.out.println("Returning to the main page...");
                         Thread.sleep(3000);
                         break;
@@ -79,7 +79,7 @@ public class App {
                     // If card not exists, output error msg to stderr and return to greeting page.
                     if(!isCardExist) {
                         System.err.println("Sorry, this card is not recorded in our system.\nPlease contact the staff.\n");
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                         System.out.println("Returning to the main page...");
                         Thread.sleep(3000);
                         break;
@@ -90,6 +90,7 @@ public class App {
                         Date expDate = new SimpleDateFormat("dd-MM-yyyy").parse(inputs[2]);
                         correctCardinfo = atm.authentication(issueDate, expDate, inputs[5], inputs[6], inputs[3]);
                         if (!correctCardinfo) {
+                            Thread.sleep(3000);
                             System.out.println("Returning to the main page...");
                             Thread.sleep(3000);
                             break;
@@ -107,7 +108,7 @@ public class App {
                             System.err.println("Time out!");
                             System.out.println("Returning to the main page...");
                             Thread.sleep(3000);
-                            break;
+                            break service;
                         }
                         switch (service) {
                             case "1":
@@ -117,7 +118,7 @@ public class App {
                                     System.err.println("Time out!");
                                     System.out.println("Returning to the main page...");
                                     Thread.sleep(3000);
-                                    break;
+                                    break service;
                                 }
                                 atm.withdraw(Double.parseDouble(withdraw));
 
@@ -129,7 +130,7 @@ public class App {
                                     System.err.println("Time out!");
                                     System.out.println("Returning to the main page...");
                                     Thread.sleep(3000);
-                                    break;
+                                    break service;
                                 }
                                 atm.deposit(Double.parseDouble(deposit));
 

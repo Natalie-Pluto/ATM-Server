@@ -53,7 +53,7 @@ public class ATM {
         if(isValid) {
             System.out.println("Please enter your pin:");
             int counter = 0;
-            Scanner input = new Scanner(System.in);
+            App app = new App();
             while (true) {
                 counter++;
                 if (counter > 3) {
@@ -63,7 +63,11 @@ public class ATM {
                     System.err.println("Sorry, you have exceeded the allowed number of attempts. Your card is blocked. Please contact the staff.");
                     break;
                 }
-                String pinNum = input.nextLine();
+                String pinNum = app.timer();
+                if(pinNum == null) {
+                    System.err.println("Time out!");
+                    return false;
+                }
                 if (pinNum.equals(pin)) {
                     return true;
                 } else {
@@ -77,7 +81,7 @@ public class ATM {
     // 1. Check if there's enough money left to be withdraw
     // 2. Change the card balance
     // 3. Change the ATM balance
-    // 5. Check ATM balance
+    // 4. Check ATM balance
     public boolean withdraw(double amount) {
 
         return false;
