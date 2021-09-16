@@ -28,6 +28,8 @@ public class DB {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate("UPDATE atmserver.\"Card\" SET " + column + " = " + value.toString() + " WHERE card_number = '" + cardNumber + ";"); 
+			stmt.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -49,13 +51,16 @@ public class DB {
 			ResultSet result = stmt.executeQuery(sql);
 			assert (result.next()); 
 			output = result.getBoolean(column);
-			
+			stmt.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return output;
 	}
+
+	
 
 	private Double sql_getDouble(String column) {
 		// Takes column name and returns the value of the column for row
@@ -64,13 +69,15 @@ public class DB {
 		if (this.cardNumber == null) return null;
 		Connection conn = null;
 		Double output = 0.0;
-		String sql = "SELECT " + column + " FROM atmserver.\"Card\" WHERE card_number = '" + this.cardNumber + "';";
+		String sql = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + this.cardNumber + "';";
 		try {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
 			assert (result.next()); 
 			output = result.getDouble(column);
+			stmt.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -89,9 +96,35 @@ public class DB {
 	public void setBlocked(boolean x) {sql_update("blocked", x);}
 	public boolean getBlocked() {return sql_getBoolean("blocked");}
 
-	public void subtractBalance(double x) {} //
-	public void addBalance(double x) {} //TODO
-	public double getBalance() {return 0;} //TODO
-	public boolean authenticate(String cardNumber, String pin) {return false;} //TODO
+	// balance methods
+	public void setBalance(double x) {sql_update("balance", x);}
+	public double getBalance() {return sql_getDouble("balance");} 
+
+	//authenticate and set 'cardNumber' field.
+	public boolean authenticate(String cardNumber, String pin) {
+
+		/*
+        This method checks if the cardNum and pin represent a row in the card table, if yes 
+        then true is returned. If cardNum or pin are invalid or the combination does not exist
+        in the card table, false is returned.
+        */
+       
+        Connection conn = null;
+        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
+
+        try {
+        	conn = DriverManager.getConnection(db_url, username, password); 
+            Statement stmt = conn.createStatement();
+            ResultSet result = stmt.executeQuery(query);
+			if (result.next()) this.cardNumber = cardNumber;
+            result.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return false;
+	} 
 }
  
