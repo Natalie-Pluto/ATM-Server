@@ -2,9 +2,9 @@ package ATMSystem;
 import java.sql.*;
 
 public class DB {
-	static final String DB_URL = "localhost";
-	static final String USERNAME = "alien";
-	static final String PASSWORD = "fuck"; 
+	static final String DB_URL = "<db_url>";
+	static final String USERNAME = "<username>";
+	static final String PASSWORD = "<password>"; 
 
 	private String cardNumber; // If cardNumber is null, it means no card is authenticated.	
 	
