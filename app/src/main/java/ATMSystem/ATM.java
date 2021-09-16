@@ -1,109 +1,115 @@
 package ATMSystem;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
+import java.sql.*;
 
 public class ATM {
-    //private fields
+    // private fields:
+    // - cash: represents the cash in the ATM. An ATM object is initialised with some 
+    //         amount of cash.
+    // - authenticated: 
     private double cash;
-    boolean authenticated;
+    private String cardNumber; // cardNumber == null if and only if a user is not authenticated.
 
     // constructor
     public ATM(double startingCash) {
         cash = startingCash;
     }
 
-    // Enter > 3 times pin will block the card
-    private void block() {
+    private double getBalance() {
+        /*
+        This method returns the balance of the card currently authenticated. If 
+        the atm is not in the authenticated state (i.e. cardNumber = -1), then -1
+        is returned.
+        */
+        //TODO
+        if (null == cardNumber) return -1;
+        return 0;
 
+    }
+    
+    private void block() {
+        /*
+        This method blocks the currently authenticated card.
+        */
+        //TODO
+    }
+
+    private void confiscate() {
+        /*
+        sets the confiscated to 
+        */
+        //TODO
     }
 
     private boolean changeBalance() {
-
+        //TODO
         return false;
     }
 
-    public boolean authentication(Date issueDate, Date expDate, String isReported, String isBlocked, String pin) throws InterruptedException {;
-        boolean isValid = true;
-        // Check the issue date:
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date();
-        if (issueDate.after(currentDate)) {
-            System.err.println("Sorry, this card is not issued yet.");
-            isValid = false;
-        }
-        // Check the expDate:
-        if(expDate.before(currentDate)) {
-            System.err.println("Sorry, this card is expired");
-            isValid = false;
-        }
-        // Check if the card has been reported lost/stolen
-        if(isReported.equalsIgnoreCase("T")) {
-            System.err.println("Sorry, this card has been reported lost/stolen.");
-            isValid = false;
-        }
-        // Check if this card is blocked
-        if(isBlocked.equalsIgnoreCase("T")) {
-            System.err.println("Sorry, this card is blocked.");
-            isValid = false;
-        }
-        // Lastly, ask user to enter the pin
-        if(isValid) {
-            System.out.println("Please enter your pin:");
-            int counter = 0;
-            App app = new App();
-            while (true) {
-                counter++;
-                if (counter > 3) {
-                    isValid = false;
-                    // Block the card
-                    block();
-                    System.err.println("Sorry, you have exceeded the allowed number of attempts. Your card is blocked. Please contact the staff.");
-                    break;
-                }
-                String pinNum = app.timer();
-                if(pinNum == null) {
-                    System.err.println("Time out!");
-                    return false;
-                }
-                if (pinNum.equals(pin)) {
-                    return true;
-                } else {
-                    System.err.printf("Wrong pin number, please enter again.\n" + "(You have %d more attempts)\n", (3 - counter));
-                }
-            }
-        }
-        return isValid;
+    private boolean cardFormatCheck(String cardNum, String pin) {
+        // TODO
+        return false;
     }
 
-    // 1. Check if there's enough money left to be withdraw
-    // 2. Change the card balance
-    // 3. Change the ATM balance
-    // 4. Check ATM balance
-    public boolean withdraw(double amount) {
+    public boolean authentication(String cardNum, String pin) {
+        /*
+        This method checks if the cardNum and pin represent a row in the card table, if yes 
+        then true is returned. If cardNum or pin are invalid or the combination does not exist
+        in the card table, false is returned.
+        */
+        //TODO: fix and add parameter test
+       
+        Connection c = null;
+        Statement stmt = null;
+        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNum  + "' AND pin = '" + pin + "';";
 
+        try {
+           // Class.forName("org.postgresql.Driver");
+            c = DriverManager
+                .getConnection("jdbc:postgresql://localhost:5432/a12412", "alien", "fuck"); 
+                // I should change the password, when I made it I forgot that I would need to type it into source 
+                // code - ali
+           c.setAutoCommit(false); 
+           System.out.println("Connected to database successfully!");
+           
+           stmt = c.createStatement();
+           ResultSet rs = stmt.executeQuery(query);
+           if (rs.next()) {
+           cardNum = rs.getString("card_number");
+           this.cardNumber = cardNum;
+           System.out.println(cardNum);
+           }
+           if (rs.next()) pin = rs.getString(pin);
+           //testing
+           if (cardNumber == null) System.out.println("CardNumber, pin combination does not exist");
+           else System.out.println("Card number: " + cardNumber + " with pin" + pin + " exists");
+           rs.close();
+           stmt.close();
+           c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": "+e.getMessage());
+            System.exit(0);
+        }
+        return false;
+    }
+
+    public boolean withdraw(double amount) {
+        //TODO
         return false;
     }
 
     public boolean deposit(double amount) {
-
+        //TODO
         return false;
     }
 
-    public void addCash(double amount) {
-        cash += amount;
-    }
+    public void reset_authentication() {cardNumber = null;} 
 
-    public void subCash(double amount) {
-        cash -= amount;
-    }
+    public double balanceCheck() {return getBalance();}
 
+    public void addCash(double amount) {cash += amount;}
 
-    public double getCash() {
-        return cash;
-    }
+    public double getCash() {return cash;}
 
     
 }
