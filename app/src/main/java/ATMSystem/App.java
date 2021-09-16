@@ -10,12 +10,10 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
-        ATM x = new ATM(1000);
-        System.out.println(x.getCash());
-        x.authentication("11111","0000");
-	
-	//DB db = new DB("db-url","<username>","<password>");
+	//next line: DB db = new DB("<db-url>","<username>","<password>");
 	DB db = new DB("alien","fuck","jdbc:postgresql://localhost:5432/a12412");
 	db.authenticate("11111","0000");
+	System.out.println(db.getCardNumber());
+	db.setBalance(1000000.0);
     }
 }

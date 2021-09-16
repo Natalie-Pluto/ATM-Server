@@ -27,7 +27,7 @@ public class DB {
 		try {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
-			stmt.executeUpdate("UPDATE atmserver.\"Card\" SET " + column + " = " + value.toString() + " WHERE card_number = '" + cardNumber + ";"); 
+			stmt.executeUpdate("UPDATE atmserver.\"Card\" SET " + column + " = " + value.toString() + " WHERE card_number = '" + cardNumber + "';"); 
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -126,5 +126,8 @@ public class DB {
         }
         return false;
 	} 
+
+	//TODO
+	public boolean expired() {return false;}
 }
  
