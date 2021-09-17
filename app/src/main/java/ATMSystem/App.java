@@ -289,4 +289,5 @@ public class App {
     public double getAtmBalance() {
         return atmBalance;
     }
+
 }
