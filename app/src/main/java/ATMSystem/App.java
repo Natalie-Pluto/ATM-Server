@@ -16,7 +16,7 @@ public class App {
     }
     public static void main(String[] arg) throws InterruptedException {
         App app = new App(1000000);
-        while(true) {
+        while (true) {
             // Greetings and ask user to insert their card for validity check.
             System.out.println(app.greetings());
             Scanner userInput = new Scanner(System.in);
@@ -24,16 +24,17 @@ public class App {
             boolean isServiceOver = false;
             // Count the times of enter
             int cardEnterCounter = 0;
-            service: while (!isServiceOver) {
+            service:
+            while (!isServiceOver) {
                 // First, we ask user to enter their card number
                 String cardNumber;
-                if(cardEnterCounter == 0) {
+                if (cardEnterCounter == 0) {
                     // The first user's input does not have timer
                     cardNumber = userInput.nextLine();
                 } else {
                     // 120s timer
                     cardNumber = app.timer();
-                    if(cardNumber == null) {
+                    if (cardNumber == null) {
                         System.err.println("Time out!");
                         System.out.println("Returning to the main page...");
                         Thread.sleep(3000);
@@ -54,11 +55,11 @@ public class App {
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber,"alien","fuck","jdbc:postgresql://localhost:5432/a12412");
+                    DB db = new DB(cardNumber, "alien", "fuck", "jdbc:postgresql://localhost:5432/a12412");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
-                    if(!isCardExist) {
+                    if (!isCardExist) {
                         System.err.println("Sorry, this card is not recorded in our system.\nPlease contact the staff.\n");
                         Thread.sleep(3000);
                         System.out.println("Returning to the main page...");
@@ -76,17 +77,17 @@ public class App {
                         }
                         // ask user to enter the pin
                         int pinCounter = 0;
-                        while(pinCounter < 3) {
+                        while (pinCounter < 3) {
                             pinCounter++;
                             System.out.println("Please enter the pin: ");
                             String pin = app.timer();
-                            if(!db.authenticate(cardNumber, pin)) {
-                                if(pinCounter == 1) {
+                            if (!db.authenticate(cardNumber, pin)) {
+                                if (pinCounter == 1) {
                                     System.err.print("Wrong pin. Please enter again:\n" + "(You have 2 more attempts)\n");
                                 } else {
                                     System.err.printf("Wrong pin. Please enter again:\n" + "(You have %d more attempt)\n", (3 - pinCounter));
                                 }
-                                if(pinCounter == 3) {
+                                if (pinCounter == 3) {
                                     System.err.print("Sorry, you have exceeded the allowed attempts, your card is blocked.\n" + "Please contact the staff if you need assistance.\n");
                                     db.setBlocked(true);
                                     Thread.sleep(3000);
@@ -99,11 +100,10 @@ public class App {
                             }
                         }
                     }
-
                     // The card id valid, ask user to choose a service.
                     // Print the services options
                     boolean isContinue = true;
-                    while(isContinue) {
+                    while (isContinue) {
                         System.out.print("Please choose a service:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
                         System.out.println("If you want to end the transaction, please choose cancel.");
                         // Get the input (user got 120s to choose)
@@ -126,7 +126,7 @@ public class App {
                                     break service;
                                 }
                                 // Check if the balance is enough
-                                if(db.getBalance() < Double.parseDouble(withdraw)) {
+                                if (db.getBalance() < Double.parseDouble(withdraw)) {
                                     System.out.println("Insufficient balance.");
                                     DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
                                     System.out.println("Available Account Balance: $" + dollarFormat.format(db.getBalance()));
@@ -135,7 +135,7 @@ public class App {
                                     // Update card balance
                                     db.setBalance(db.getBalance() - Double.parseDouble(withdraw));
                                     // Update ATM balance
-                                    if(Double.parseDouble(withdraw) > app.getAtmBalance()) {
+                                    if (Double.parseDouble(withdraw) > app.getAtmBalance()) {
                                         System.err.println("Sorry, this ATM has insufficient cash available.");
                                         System.err.println("End of Transaction...");
                                         // add cash to the atm
@@ -163,7 +163,7 @@ public class App {
                                     break service;
                                 }
                                 // Can't deposit coins -> check if deposit is an integer
-                                try{
+                                try {
                                     Integer.parseInt(deposit);
                                 } catch (NumberFormatException ex) {
                                     System.err.println("Sorry, no coins can be deposited.");

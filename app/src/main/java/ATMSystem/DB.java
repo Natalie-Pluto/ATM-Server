@@ -10,8 +10,7 @@ public class DB {
 
 	// If cardNumber is null, it means no card is authenticated.
 	// This variable is set by the authenticate method.
-	private String cardNumber; 
-
+	private String cardNumber;
 	public DB(String cardNumber, String username, String password, String db_url) {
 	    this.cardNumber = cardNumber;
 		this.username = username;
@@ -62,7 +61,6 @@ public class DB {
 		return output;
 	}
 
-
 	private Double sql_getDouble(String column) {
 		// Takes column name and returns the value of the column for row
 		// containing the card number currently authenticated. If no card 
@@ -85,6 +83,22 @@ public class DB {
 		}
 		return output;
 	}
+	
+	// cardNumber methods
+	public String getCardNumber() {return this.cardNumber;}
+
+	// confiscated methods
+	public void setConfiscated(boolean x) {sql_update("confiscated", x);}
+	public boolean getconfiscated() {return sql_getBoolean("confiscated");}
+
+	// blocked methods
+	public void setBlocked(boolean x) {sql_update("blocked", x);}
+	public boolean getBlocked() {return sql_getBoolean("blocked");}
+
+	// balance methods
+	public void setBalance(double x) {sql_update("balance", x);}
+	public double getBalance() {return sql_getDouble("balance");} 
+
 
 	//authenticate and set 'cardNumber' field.
 	public boolean authenticate(String cardNumber, String pin) {
@@ -94,6 +108,7 @@ public class DB {
         then true is returned. If cardNum or pin are invalid or the combination does not exist
         in the card table, false is returned.
         */
+
         Connection conn = null;
         String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
 
@@ -173,41 +188,7 @@ public class DB {
         return true;
     }
 
-    // cardNumber methods
-    /*public String getCardNumber() {
-        return this.cardNumber;
-    }
-
-    // confiscated methods
-    public void setConfiscated(boolean x) {
-        sql_update("confiscated", x);
-    }*/
-
-    public boolean getconfiscated() {
-
-        return sql_getBoolean("confiscated");
-    }
-
-    // blocked methods
-    public void setBlocked(boolean x) {
-
-        sql_update("blocked", x);
-    }
-
-    public boolean getBlocked() {
-
-        return sql_getBoolean("blocked");
-    }
-
-    // balance methods
-    public void setBalance(double x) {
-
-        sql_update("balance", x);
-    }
-
-    public double getBalance() {
-
-        return sql_getDouble("balance");
-    }
-
 }
+
+ 
+
