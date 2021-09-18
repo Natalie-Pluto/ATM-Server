@@ -182,7 +182,8 @@ public class App {
                                 break;
                             case "3":
                                 // Balance check
-                                db.getBalance();
+                                DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
+                                System.out.println("Account Balance: $" + dollarFormat.format(db.getBalance()));
                                 break;
                             case "4":
                                 // End of transaction
