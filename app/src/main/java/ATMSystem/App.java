@@ -132,16 +132,16 @@ public class App {
                                     System.out.println("Available Account Balance: $" + dollarFormat.format(db.getBalance()));
                                     break;
                                 } else {
-                                    // Update card balance
-                                    db.setBalance(db.getBalance() - Double.parseDouble(withdraw));
                                     // Update ATM balance
                                     if (Double.parseDouble(withdraw) > app.getAtmBalance()) {
                                         System.err.println("Sorry, this ATM has insufficient cash available.");
                                         System.err.println("End of Transaction...");
                                         // add cash to the atm
-                                        app.setAtmBalance(1000000);
+                                        app.addAtmCash(1000000);
                                         break service;
                                     } else {
+                                        // Update card balance
+                                        db.setBalance(db.getBalance() - Double.parseDouble(withdraw));
                                         app.setAtmBalance(app.getAtmBalance() - Double.parseDouble(withdraw));
                                         // Print the receipt
                                         app.receipt(cardNumber, Double.parseDouble(withdraw), "Withdraw", db.getBalance());
@@ -172,7 +172,7 @@ public class App {
                                 // Update card balance
                                 db.setBalance(db.getBalance() + Double.parseDouble(deposit));
                                 // Update ATM balance
-                                app.setAtmBalance(Double.parseDouble(deposit));
+                                app.setAtmBalance(app.getAtmBalance() + Double.parseDouble(deposit));
                                 // Print the receipt
                                 app.receipt(cardNumber, Double.parseDouble(deposit), "Deposit", db.getBalance());
                                 // End of transaction
@@ -263,6 +263,8 @@ public class App {
         }
         System.out.println("Account Balance: $" + dollarFormat.format(cardBalance));
         System.out.println("Transcation Number: " +transNum);
+        System.out.println("--------------------------------------------------------------------");
+        System.out.print("\n" + "\n");
     }
 
     // End of Transaction
@@ -278,17 +280,21 @@ public class App {
     }
 
 
-    public void setAtmBalance(double amount) throws InterruptedException {
+    public void setAtmBalance(double amount) {
+        this.atmBalance = amount;
+    }
+
+    public double getAtmBalance() {
+        return atmBalance;
+    }
+
+    public void addAtmCash(double amount) throws InterruptedException {
         System.out.println("Waiting staff to add cash...");
         Thread.sleep(3000);
         this.atmBalance = getAtmBalance() + amount;
         System.out.println("Cash added.");
         System.out.println("Returning to main page.");
         Thread.sleep(3000);
-    }
-
-    public double getAtmBalance() {
-        return atmBalance;
     }
 
 }
