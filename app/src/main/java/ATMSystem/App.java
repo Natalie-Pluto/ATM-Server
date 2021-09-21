@@ -15,10 +15,12 @@ public class App {
         this.atmBalance = atmBalance;
     }
     public static void main(String[] arg) throws InterruptedException {
-        App app = new App(1000000);
+        App app = new App(100000);
         while (true) {
             // Greetings and ask user to insert their card for validity check.
-            System.out.println(app.greetings());
+            Calendar c = Calendar.getInstance();
+            int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+            System.out.println(app.greetings(timeOfDay));
             Scanner userInput = new Scanner(System.in);
             // If the service for an user is over, return to the greeting page.
             boolean isServiceOver = false;
@@ -40,8 +42,10 @@ public class App {
                     cardNumber = app.timer();
                     if (cardNumber == null) {
                         System.err.println("Time out!");
-                        System.out.println("Returning to the main page...");
-                        Thread.sleep(3000);
+                        System.out.println("Returning to the main page...\n");
+                        System.out.println("--------------------------------------------------------------------");
+                        System.out.print("\n");
+                        Thread.sleep(2000);
                         break;
                     }
                 }
@@ -51,32 +55,38 @@ public class App {
                     // User only allowed to enter 5 times
                     if (cardEnterCounter > 4) {
                         System.err.println("Exceed the enter limit, please contact the front desk to check on your card number.");
-                        Thread.sleep(3000);
-                        System.out.println("Returning to the main page...");
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
+                        System.out.println("Returning to the main page...\n");
+                        System.out.println("--------------------------------------------------------------------");
+                        System.out.print("\n");
+                        Thread.sleep(2000);
                         break;
                     }
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber, "alien", "fuck", "jdbc:postgresql://localhost:5432/a12412");
+                    DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
                     if (!isCardExist) {
                         System.err.println("Sorry, this card is not recorded in our system.\nPlease contact the staff.\n");
-                        Thread.sleep(3000);
-                        System.out.println("Returning to the main page...");
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
+                        System.out.println("Returning to the main page...\n");
+                        System.out.println("--------------------------------------------------------------------");
+                        System.out.print("\n");
+                        Thread.sleep(2000);
                         break;
                     } else {
                         // Further card checking (issue & expired date)
                         boolean correctCardinfo;
                         correctCardinfo = db.isCardInfoMatch(cardNumber);
                         if (!correctCardinfo) {
-                            Thread.sleep(3000);
-                            System.out.println("Returning to the main page...");
-                            Thread.sleep(3000);
+                            Thread.sleep(2000);
+                            System.out.println("Returning to the main page...\n");
+                            System.out.println("--------------------------------------------------------------------");
+                            System.out.print("\n");
+                            Thread.sleep(2000);
                             break;
                         }
                         // ask user to enter the pin
@@ -95,7 +105,9 @@ public class App {
                                     System.err.print("Sorry, you have exceeded the allowed attempts, your card is blocked.\n" + "Please contact the staff if you need assistance.\n");
                                     db.setBlocked(true);
                                     Thread.sleep(3000);
-                                    System.out.println("Returning to the main page...");
+                                    System.out.println("Returning to the main page...\n");
+                                    System.out.println("--------------------------------------------------------------------");
+                                    System.out.print("\n");
                                     Thread.sleep(3000);
                                     break service;
                                 }
@@ -114,8 +126,10 @@ public class App {
                         String service = app.timer();
                         if (service == null) {
                             System.err.println("Time out!");
-                            System.out.println("Returning to the main page...");
-                            Thread.sleep(3000);
+                            System.out.println("Returning to the main page...\n");
+                            System.out.println("--------------------------------------------------------------------");
+                            System.out.print("\n");
+                            Thread.sleep(2000);
                             break service;
                         }
                         switch (service) {
@@ -125,21 +139,27 @@ public class App {
                                 String withdraw = app.timer();
                                 if (withdraw == null) {
                                     System.err.println("Time out!");
-                                    System.out.println("Returning to the main page...");
-                                    Thread.sleep(3000);
+                                    System.out.println("Returning to the main page...\n");
+                                    System.out.println("--------------------------------------------------------------------");
+                                    System.out.print("\n");
+                                    Thread.sleep(2000);
                                     break service;
                                 }
                                 // Check if the balance is enough
                                 if (db.getBalance() < Double.parseDouble(withdraw)) {
                                     System.out.println("Insufficient balance.");
                                     DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
-                                    System.out.println("Available Account Balance: $" + dollarFormat.format(db.getBalance()));
+                                    System.out.println("Available Account Balance: $" + dollarFormat.format(db.getBalance()) + "\n");
+                                    System.out.println("--------------------------------------------------------------------");
+                                    System.out.print("\n");
                                     break;
                                 } else {
                                     // Update ATM balance
                                     if (Double.parseDouble(withdraw) > app.getAtmBalance()) {
                                         System.err.println("Sorry, this ATM has insufficient cash available.");
-                                        System.err.println("End of Transaction...");
+                                        System.err.println("End of Transaction...\n");
+                                        System.out.println("--------------------------------------------------------------------");
+                                        System.out.print("\n");
                                         // add cash to the atm
                                         app.addAtmCash(1000000);
                                         break service;
@@ -162,15 +182,19 @@ public class App {
                                 String deposit = app.timer();
                                 if (deposit == null) {
                                     System.err.println("Time out!");
-                                    System.out.println("Returning to the main page...");
-                                    Thread.sleep(3000);
+                                    System.out.println("Returning to the main page...\n");
+                                    System.out.println("--------------------------------------------------------------------");
+                                    System.out.print("\n");
+                                    Thread.sleep(2000);
                                     break service;
                                 }
                                 // Can't deposit coins -> check if deposit is an integer
                                 try {
                                     Integer.parseInt(deposit);
                                 } catch (NumberFormatException ex) {
-                                    System.err.println("Sorry, no coins can be deposited.");
+                                    System.err.println("Sorry, no coins can be deposited.\n");
+                                    System.out.println("--------------------------------------------------------------------");
+                                    System.out.print("\n");
                                     break;
                                 }
                                 // Update card balance
@@ -187,7 +211,11 @@ public class App {
                             case "3":
                                 // Balance check
                                 DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
+                                System.out.print("\n" + "\n");
+                                System.out.println("--------------------------------------------------------------------");
                                 System.out.println("Account Balance: $" + dollarFormat.format(db.getBalance()));
+                                System.out.println("--------------------------------------------------------------------");
+                                System.out.print("\n" + "\n");
                                 break;
                             case "4":
                                 // End of transaction
@@ -203,9 +231,7 @@ public class App {
     }
 
     // Print greeting message according to the time.
-    public String greetings () {
-        Calendar c = Calendar.getInstance();
-        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+    public String greetings (int timeOfDay) {
         if(timeOfDay < 12){
             return ("Good Morning, welcome to XYZ Bank! Please enter your card number:");
         }else if(timeOfDay < 16){
@@ -254,9 +280,12 @@ public class App {
     }
 
     // Print receipt
-    public void receipt(String cardNum, double amount, String transType, double cardBalance) {
+    public void receipt(String cardNum, double amount, String transType, double cardBalance) throws InterruptedException {
         UUID transNum = UUID.randomUUID();
         DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
+        System.out.print("\nTransaction Succeed." + " Printing Receipt...");
+        Thread.sleep(2000);
+        System.out.print("\n" + "\n");
         System.out.println(">>>>>>>> XYZ Bank --------------------------------------------------");
         System.out.println("Transaction Type: " + transType);
         System.out.println("Card Number: " + cardNum);
@@ -268,7 +297,7 @@ public class App {
         System.out.println("Account Balance: $" + dollarFormat.format(cardBalance));
         System.out.println("Transcation Number: " +transNum);
         System.out.println("--------------------------------------------------------------------");
-        System.out.print("\n" + "\n");
+        System.out.print("\n");
     }
 
     // End of Transaction
@@ -276,10 +305,12 @@ public class App {
         // End of transaction
         System.out.println("End of transaction...");
         System.out.println("Ejecting card...");
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n");
         Thread.sleep(3000);
-        System.out.println("Returning to the main page...");
+        System.out.println("Returning to the main page...\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.print("\n");
         Thread.sleep(3000);
     }
 
@@ -294,11 +325,13 @@ public class App {
 
     public void addAtmCash(double amount) throws InterruptedException {
         System.out.println("Waiting staff to add cash...");
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         this.atmBalance = getAtmBalance() + amount;
         System.out.println("Cash added.");
-        System.out.println("Returning to main page.");
-        Thread.sleep(3000);
+        System.out.println("Returning to main page.\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.print("\n");
+        Thread.sleep(2000);
     }
 
 }

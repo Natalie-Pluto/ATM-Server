@@ -28,7 +28,7 @@ public class DB {
 		try {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
-			stmt.executeUpdate("UPDATE atmserver.\"Card\" SET " + column + " = " + value.toString() + " WHERE card_number = '" + cardNumber + "';"); 
+			stmt.executeUpdate("UPDATE atmserver.\"card\" SET " + column + " = " + value.toString() + " WHERE card_number = '" + cardNumber + "';");
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -45,13 +45,14 @@ public class DB {
 		if (this.cardNumber == null) return null;
 		Connection conn = null;
 		Boolean output = false;
-		String sql = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + this.cardNumber + "';";
+		String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + this.cardNumber + "';";
 		try {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
-			assert (result.next()); 
-			output = result.getBoolean(column);
+			if (result.next()) {
+				output = result.getBoolean(column);
+			}
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -68,13 +69,14 @@ public class DB {
 		if (this.cardNumber == null) return null;
 		Connection conn = null;
 		Double output = 0.0;
-		String sql = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + this.cardNumber + "';";
+		String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + this.cardNumber + "';";
 		try {
 			conn = DriverManager.getConnection(db_url, username, password);
 			Statement stmt = conn.createStatement();
 			ResultSet result = stmt.executeQuery(sql);
-			assert (result.next()); 
-			output = result.getDouble(column);
+			if (result.next()) {
+				output = result.getDouble(column);
+			}
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -93,7 +95,9 @@ public class DB {
 
 	// blocked methods
 	public void setBlocked(boolean x) {sql_update("blocked", x);}
-	public boolean getBlocked() {return sql_getBoolean("blocked");}
+	public boolean getBlocked() {
+		return sql_getBoolean("blocked");
+	}
 
 	// balance methods
 	public void setBalance(double x) {sql_update("balance", x);}
@@ -110,7 +114,7 @@ public class DB {
         */
 
         Connection conn = null;
-        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
+        String query = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
 
         try {
             conn = DriverManager.getConnection(db_url, username, password);
@@ -118,6 +122,7 @@ public class DB {
             ResultSet result = stmt.executeQuery(query);
             if (result.next()) {
                 this.cardNumber = cardNumber;
+                return true;
             }
             result.close();
             stmt.close();
@@ -132,7 +137,7 @@ public class DB {
     // Search card in the database
     public boolean isCardexist(String cardNum) {
         Connection conn = null;
-        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNum  + "';";
+        String query = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNum  + "';";
         try {
             conn = DriverManager.getConnection(db_url, username, password);
             Statement stmt = conn.createStatement();
@@ -154,16 +159,17 @@ public class DB {
         // Current date
         Date currentDate = new Date();
         Connection conn = null;
-        String sql = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNum  + "';";
-        Date issueDate;
-        Date expiredDate;
+        String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNum  + "';";
+        Date issueDate = null;
+        Date expiredDate = null;
         try {
             conn = DriverManager.getConnection(db_url, username, password);
             Statement stmt = conn.createStatement();
             ResultSet result = stmt.executeQuery(sql);
-            assert (result.next());
-            issueDate = result.getDate("issue_date");
-            expiredDate = result.getDate("exp_date");
+            if (result.next()) {
+				issueDate = result.getDate("issue_date");
+				expiredDate = result.getDate("exp_date");
+			}
             stmt.close();
             conn.close();
         } catch (Exception e) {
