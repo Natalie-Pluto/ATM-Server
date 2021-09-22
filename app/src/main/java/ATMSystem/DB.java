@@ -12,15 +12,21 @@ public class DB {
 	// This variable is set by the authenticate method.
 	private String cardNumber;
 	public DB(String cardNumber, String username, String password, String db_url) {
-	    this.cardNumber = cardNumber;
-		this.username = username;
-		this.password = password;
-		this.db_url = db_url;
+        this.cardNumber = cardNumber;
+        if (db_connection_test(db_url, username, password)) {
+            //The following fields are only set if they are valid.
+            //If they are invalid, then they must be reassigned, 
+            // using the setConnectionFields method.
+		    this.username = username;
+		    this.password = password;
+		    this.db_url = db_url;
+        }
 	}
 
     public boolean db_connection_test(String username, String password, String db_url) {
         // This method checks whether a db_url, username and password combination enables database connection.
         // True is returned if connection is successful.
+        Connection conn = null;
         try {
             conn = DriverManager.getConnection(db_url, username, password);
             conn.close();
@@ -208,8 +214,23 @@ public class DB {
     }
 
     public String getDB_Url() {return db_url;}
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
+
+    public String getUsername() {return username;}
+
+    public String getPassword() {return password;}
+
+    public boolean setConnectionFields(String db_url, String username, String password) {
+        if (db_connection_test(username, password, db_url)) {
+            //The fields are only set if they are valid.
+            //If they are invalid, then they must be reassigned, 
+            // using this method.
+            this.db_url = db_url;
+            this.username = username;
+            this.password = password;
+            return true;
+        }
+        return false;
+    }
 
 }
 
