@@ -17,6 +17,19 @@ public class DB {
 		this.password = password;
 		this.db_url = db_url;
 	}
+
+    public boolean db_connection_test(String username, String password, String db_url) {
+        // This method checks whether a db_url, username and password combination enables database connection.
+        // True is returned if connection is successful.
+        try {
+            conn = DriverManager.getConnection(db_url, username, password);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 	
 	private <T> boolean sql_update(String column, T value) {
 		// Takes column name and value to update column value to.
