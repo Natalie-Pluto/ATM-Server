@@ -1,0 +1,71 @@
+List of ideas the for the testing the DB object with full coverage
+
+n. <description>:<todo/name of test method>
+
+A. INITIALISATION TEST
+1. DB object can be initialised without breaking and that the constructor variables can be obtained through getters.:initOk
+
+B. authentication METHOD TESTS
+1. authentication method returns false for a valid username, but invalid password.:todo
+2. authentication method returns false for an invalid username, but valid password.:todo
+3. authentication method returns false for a bad username and password:todo
+
+C. sql_update METHOD TESTS
+1. update a numeric type entry:todo
+2. update a string type entry:todo
+
+D. sql_getBoolean METHOD TESTS
+1. get a boolean:todo
+
+E. sql_getDouble METHOD TESTS
+1. get a double:todo
+
+F. cardNumber GET/SET TESTS
+1. get card number when authenticated:todo
+2. get card number when not authenticated:todo
+3. set card number when authenticated:todo
+4. set card number when not authenticated:todo
+
+G. confiscated GET/SET TESTS
+1. set confiscated when authenticate:todo
+2. set confiscated when not authenicated:todo
+3. get confiscated when authenicated:todo
+4. get confiscated when not authenticated:todo
+
+H. balance GET/SET TESTS
+1. get balance when authenticated:todo
+2. get balance when not authenticated:todo
+3. set balance when not authenticated:todo
+4. set balance when authenticated:todo
+
+I. isCardExists METHOD TESTS
+1. check if card exists when card exists:todo
+2. check if card exists when card does not exist:todo
+
+J. isCardInfoMatch METHOD TESTS
+States of authenticated card: M (Matching), ! (Not operator), B (Blocked), E (Expired), I (Issued)
+1. M,B,!E,!I:todo
+2. !M,B,!E,!I:todo
+3. M,!B,!E,!I:todo
+4. !M,!B,!E,!I:todo
+5. M,B,E,!I:todo
+6. !M,B,E,!I:todo
+7. M,!B,E,!I:todo
+8. !M,!B,E,!I:todo
+9. M,B,!E,I:todo
+10.!M,B,!E,I:todo 
+11. M,!B,!E,I:todo 
+12. !M,!B,!E,I:todo 
+13. M,B,E,I:todo
+14. !M,B,E,I:todo
+15. M,!B,E,I:todo
+16.!M,!B,E,I:todo
+17. no card is authenticated:todo
+
+K. FIELD GETTER TESTS
+1. get database connection username:todo
+2. get database connection url:todo
+3. get database connection password:todo
+
+
+
