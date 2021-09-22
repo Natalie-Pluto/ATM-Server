@@ -232,14 +232,16 @@ public class App {
 
     // Print greeting message according to the time.
     public String greetings (int timeOfDay) {
-        if(timeOfDay < 12){
-            return ("Good Morning, welcome to XYZ Bank! Please enter your card number:");
-        }else if(timeOfDay < 16){
-            return ("Good Afternoon, welcome to XYZ Bank! Please enter your card number:");
-        }else if(timeOfDay < 21){
-            return ("Good Evening, welcome to XYZ Bank! Please enter your card number:");
-        }else {
+        if(timeOfDay < 6){
             return ("Good Night, welcome to XYZ Bank! Please enter your card number:");
+        }else if(timeOfDay < 12){
+            return ("Good Morning, welcome to XYZ Bank! Please enter your card number:");
+        }else if(timeOfDay < 18){
+            return ("Good Afternoon, welcome to XYZ Bank! Please enter your card number:");
+        }else if(timeOfDay < 24){
+            return ("Good Evening, welcome to XYZ Bank! Please enter your card number:");
+        } else {
+            return ("Good Evening, welcome to XYZ Bank! Please enter your card number:");
         }
     }
 
@@ -316,6 +318,7 @@ public class App {
 
 
     public void setAtmBalance(double amount) {
+
         this.atmBalance = amount;
     }
 
