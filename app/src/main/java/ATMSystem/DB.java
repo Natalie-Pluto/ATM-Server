@@ -194,6 +194,10 @@ public class DB {
         return true;
     }
 
+    public String getDB_Url() {return db_url;}
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+
 }
 
  
