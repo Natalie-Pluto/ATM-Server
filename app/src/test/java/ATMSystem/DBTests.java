@@ -7,6 +7,8 @@ import java.sql.*;
 import java.util.Date;
 
 public class DBTests {
+    //The test descriptions are contained in DBTests.txt.
+
     //good (valid) args
     public static String db_url = "jdbc:postgresql://localhost:5432/a12412";
     public static String username = "alien";
@@ -94,7 +96,6 @@ public class DBTests {
         DB x = new DB(cardNumber, bad_username, password, bad_db_url);
         Boolean bool = x.sql_getBoolean("confiscated");
         assertEquals(bool,null);
- 
     }
 
     @Test
@@ -109,7 +110,41 @@ public class DBTests {
         DB x = new DB(cardNumber, username, password, bad_db_url);
         Double num = x.sql_getDouble("balance");
         assertTrue(num == null);
+    }
 
+    @Test
+    public void getCardNumber_F1() {
+        DB x = new DB(cardNumber, username, password, bad_db_url);
+        assertEquals(x.getCardNumber(),cardNumber);
+    }
+
+    @Test
+    public void setConfiscatedAuthenticated_G1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Boolean initialConfiscatedVal = x.sql_getBoolean("confiscated");
+        x.setConfiscated(!initialConfiscatedVal);
+        assertEquals(x.sql_getBoolean("confiscated"),!initialConfiscatedVal);
+        x.setConfiscated(initialConfiscatedVal);
+    }
+
+    @Test
+    public void setConfiscatedNotAuthenticated_G2() {
+        DB x = new DB(bad_cardNumber, username, password, db_url);
+        x.setConfiscated(true);
+    }
+
+    @Test
+    public void getConfiscatedAuthenticated() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Boolean confiscatedVal = x.getConfiscated();
+        assertTrue(confiscatedVal != null);
+    }
+
+    @Test
+    public void getConfiscatedNotAuthenticated() {
+        DB x = new DB(bad_cardNumber, username, password, db_url);
+        Boolean confiscatedVal = x.getConfiscated();
+        assertTrue(confiscatedVal == null);
     }
 
     

@@ -64,7 +64,7 @@ public class DB {
 			ResultSet result = stmt.executeQuery(sql);
 			if (result.next()) {
 				output = result.getBoolean(column);
-			}
+			} else return null;
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -103,17 +103,17 @@ public class DB {
 
 	// confiscated methods
 	public void setConfiscated(boolean x) {sql_update("confiscated", x);}
-	public boolean getconfiscated() {return sql_getBoolean("confiscated");}
+	public Boolean getConfiscated() {return sql_getBoolean("confiscated");}
 
 	// blocked methods
 	public void setBlocked(boolean x) {sql_update("blocked", x);}
-	public boolean getBlocked() {
+	public Boolean getBlocked() {
 		return sql_getBoolean("blocked");
 	}
 
 	// balance methods
 	public void setBalance(double x) {sql_update("balance", x);}
-	public double getBalance() {return sql_getDouble("balance");} 
+	public Double getBalance() {return sql_getDouble("balance");} 
 
 
 	//authenticate and set 'cardNumber' field.
@@ -189,7 +189,7 @@ public class DB {
         if(getBlocked()) {
             System.err.println("Sorry, this card is blocked.");
             return false;
-        } else if(getconfiscated()) {
+        } else if(getConfiscated()) {
             System.err.println("Sorry, this card is reported stolen or lost.");
             return false;
         } else if (expiredDate.before(currentDate)) {
