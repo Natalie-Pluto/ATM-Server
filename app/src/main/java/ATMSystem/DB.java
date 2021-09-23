@@ -13,14 +13,7 @@ public class DB {
 	private String cardNumber;
 	public DB(String cardNumber, String username, String password, String db_url) {
         this.cardNumber = cardNumber;
-        if (db_connection_test(db_url, username, password)) {
-            //The following fields are only set if they are valid.
-            //If they are invalid, then they must be reassigned, 
-            // using the setConnectionFields method.
-		    this.username = username;
-		    this.password = password;
-		    this.db_url = db_url;
-        }
+        setConnectionFields(username, password, db_url);
 	}
 
     public boolean db_connection_test(String username, String password, String db_url) {
@@ -125,19 +118,16 @@ public class DB {
 
 	//authenticate and set 'cardNumber' field.
 	public boolean authenticate(String cardNumber, String pin) {
-
-		/*
-        This method checks if the cardNum and pin represent a row in the card table, if yes 
-        then true is returned. If cardNum or pin are invalid or the combination does not exist
-        in the card table, false is returned.
-        */
+        //This method checks if the cardNum and pin represent a row in the card table, if yes 
+        //then true is returned. If cardNum or pin are invalid or the combination does not exist
+        //in the card table, false is returned.
 
         Connection conn = null;
-        String query = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
+        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
 
         try {
             conn = DriverManager.getConnection(db_url, username, password);
-            Statement stmt = conn.createStatement();
+            Statement stmt = conn.createStatement(); 
             ResultSet result = stmt.executeQuery(query);
             if (result.next()) {
                 this.cardNumber = cardNumber;
@@ -219,7 +209,7 @@ public class DB {
 
     public String getPassword() {return password;}
 
-    public boolean setConnectionFields(String db_url, String username, String password) {
+    public boolean setConnectionFields(String username, String password, String db_url) {
         if (db_connection_test(username, password, db_url)) {
             //The fields are only set if they are valid.
             //If they are invalid, then they must be reassigned, 

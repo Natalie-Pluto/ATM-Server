@@ -3,7 +3,9 @@ List of ideas the for the testing the DB object with full coverage
 n. <description>:<todo/name of test method>
 
 A. INITIALISATION TEST
-1. DB object can be initialised without breaking and that the constructor variables can be obtained through getters.:initOk
+1. DB object can be initialised without error:initOk
+2. At initialisation, a DB object does not assign database connection args to fields if they are bad:initBadArgs
+3. At intialisation, a DB Object assigns database connection args to fields if they are good:initGoodArgs
 
 B. authentication METHOD TESTS
 1. authentication method returns false for a valid username, but invalid password.:todo
