@@ -12,14 +12,16 @@ B. authentication METHOD TESTS
 2. authentication method returns true for a good card number,pin combination.:successful_authentication_B2
 
 C. sql_update METHOD TESTS
-1. update a numeric type entry:todo
-2. update a string type entry:todo
+1. update a numeric type entry:numericTypeUpdate_C1
+2. update a boolean type entry:booleanTypeUpdate_C2
 
 D. sql_getBoolean METHOD TESTS
-1. get a boolean:todo
+1. get a boolean:getBoolean_D1
+2. try to get a boolean with bad database connection fields:getBooleanFailure_D2
 
 E. sql_getDouble METHOD TESTS
-1. get a double:todo
+1. get a double:getDouble_E1
+2. try to get a double with bad database connection fields:getDoubleFailure_E2
 
 F. cardNumber GET/SET TESTS
 1. get card number when authenticated:todo

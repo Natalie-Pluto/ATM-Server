@@ -81,5 +81,37 @@ public class DBTests {
         assertEquals(x.sql_getBoolean("confiscated"),!initialConfiscatedValue);
         x.sql_update("confiscated",initialConfiscatedValue);
     }
+    
+    @Test
+    public void getBoolean_D1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Boolean bool = x.sql_getBoolean("confiscated");
+        assertTrue(bool != null);
+    }
+
+    @Test 
+    public void getBooleanFailure_D2() {
+        DB x = new DB(cardNumber, bad_username, password, bad_db_url);
+        Boolean bool = x.sql_getBoolean("confiscated");
+        assertEquals(bool,null);
+ 
+    }
+
+    @Test
+    public void getDouble_E1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Double num = x.sql_getDouble("balance");
+        assertTrue(num != null);
+    }
+
+    @Test
+    public void getDoubleFailure_E2() {
+        DB x = new DB(cardNumber, username, password, bad_db_url);
+        Double num = x.sql_getDouble("balance");
+        assertTrue(num == null);
+
+    }
+
+    
 
 }
