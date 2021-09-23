@@ -147,6 +147,35 @@ public class DBTests {
         assertTrue(confiscatedVal == null);
     }
 
+    @Test
+    public void getBalanceAuthenticated_H1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Double bal = x.getBalance();
+        assertTrue(bal != null);
+    }
+
+    @Test
+    public void getBalanceNotAuthenticated_H2() {
+        DB x = new DB(bad_cardNumber, username, password, db_url);
+        Double bal = x.getBalance();
+        assertTrue(bal == null);
+    }
+
+    @Test
+    public void setBalanceNotAuthenticated_H3() {
+        DB x = new DB(bad_cardNumber, username, password, db_url);
+        x.setBalance(10);
+    }
+
+    @Test
+    public void setBalanceAuthenticated_H4() {
+        DB x = new DB(bad_cardNumber, username, password, db_url);
+        Double bal = x.sql_getDouble("balance");
+        x.setBalance(bal - 1);
+        assertTrue(x.getBalance() ==bal - 1);
+        x.setBalance(bal);
+    }
+
     
 
 }

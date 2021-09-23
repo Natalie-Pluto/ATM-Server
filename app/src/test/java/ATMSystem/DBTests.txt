@@ -33,10 +33,11 @@ G. confiscated GET/SET TESTS
 4. get confiscated when not authenticated:getConfiscatedAuthenticated_G4
 
 H. balance GET/SET TESTS
-1. get balance when authenticated:todo
-2. get balance when not authenticated:todo
-3. set balance when not authenticated:todo
-4. set balance when authenticated:todo
+1. get balance when authenticated:getBalanceAuthenticated_H1
+2. get balance when not authenticated:getBalanceNotAuthenticated_H2
+3. set balance when not authenticated:setBalanceNotAuthenticated_H3
+4. set balance when authenticated:setBalanceAuthenticated_H4
+
 I. isCardExists METHOD TESTS
 1. check if card exists when card exists:todo
 2. check if card exists when card does not exist:todo
