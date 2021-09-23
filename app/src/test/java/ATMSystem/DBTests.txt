@@ -8,9 +8,8 @@ A. INITIALISATION TEST
 3. At intialisation, a DB Object assigns database connection args to fields if they are good:initGoodArgs
 
 B. authentication METHOD TESTS
-1. authentication method returns false for a valid username, but invalid password.:todo
-2. authentication method returns false for an invalid username, but valid password.:todo
-3. authentication method returns false for a bad username and password:todo
+1. authentication method returns false for a bad card number,pin combination:failed_authentication_B1
+2. authentication method returns true for a good card number,pin combination.:successful_authentication_B2
 
 C. sql_update METHOD TESTS
 1. update a numeric type entry:todo

@@ -64,6 +64,22 @@ public class DBTests {
         assertTrue(x.authenticate(cardNumber,pin));
     }
 
-    
+    @Test
+    public void numericTypeUpdate_C1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        Double initialBal = x.sql_getDouble("balance");
+        x.sql_update("balance",initialBal - 1);
+        assertTrue(x.sql_getDouble("balance") == initialBal - 1);
+        x.sql_update("balance",initialBal);
+    }
+
+    @Test 
+    public void booleanTypeUpdate_C2() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        boolean initialConfiscatedValue = x.sql_getBoolean("confiscated");
+        x.sql_update("confiscated", !initialConfiscatedValue);
+        assertEquals(x.sql_getBoolean("confiscated"),!initialConfiscatedValue);
+        x.sql_update("confiscated",initialConfiscatedValue);
+    }
 
 }

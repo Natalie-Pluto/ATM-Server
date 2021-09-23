@@ -30,7 +30,7 @@ public class DB {
         return true;
     }
 	
-	private <T> boolean sql_update(String column, T value) {
+	public <T> boolean sql_update(String column, T value) {
 		// Takes column name and value to update column value to.
 		// The column value is updated for the row containing
 		// the card number that is currently authenticated. If 
@@ -50,7 +50,7 @@ public class DB {
 		return true;
 	}
 
-	private Boolean sql_getBoolean(String column) {
+	public Boolean sql_getBoolean(String column) {
 		// Takes column name and returns the value of the column for row 
 		// containing the card number currently authenticated. If no card is 
 		// authenticated, then null is returned.
@@ -74,7 +74,7 @@ public class DB {
 		return output;
 	}
 
-	private Double sql_getDouble(String column) {
+	public Double sql_getDouble(String column) {
 		// Takes column name and returns the value of the column for row
 		// containing the card number currently authenticated. If no card 
 		// is authenticated, then null is returned.
@@ -123,7 +123,7 @@ public class DB {
         //in the card table, false is returned.
 
         Connection conn = null;
-        String query = "SELECT * FROM atmserver.\"Card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
+        String query = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
 
         try {
             conn = DriverManager.getConnection(db_url, username, password);
