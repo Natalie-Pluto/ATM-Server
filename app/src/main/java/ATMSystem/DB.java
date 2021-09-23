@@ -90,18 +90,31 @@ public class DB {
 	public String getCardNumber() {return this.cardNumber;}
 
 	// confiscated methods
-	public void setConfiscated(boolean x) {sql_update("confiscated", x);}
-	public boolean getconfiscated() {return sql_getBoolean("confiscated");}
+	public void setConfiscated(boolean x) {
+		sql_update("confiscated", x);
+	}
+
+	public boolean getconfiscated() {
+		return sql_getBoolean("confiscated");
+	}
 
 	// blocked methods
-	public void setBlocked(boolean x) {sql_update("blocked", x);}
+	public void setBlocked(boolean x) {
+		sql_update("blocked", x);
+	}
+
 	public boolean getBlocked() {
 		return sql_getBoolean("blocked");
 	}
 
 	// balance methods
-	public void setBalance(double x) {sql_update("balance", x);}
-	public double getBalance() {return sql_getDouble("balance");} 
+	public void setBalance(double x) {
+		sql_update("balance", x);
+	}
+
+	public double getBalance() {
+		return sql_getDouble("balance");
+	}
 
 
 	//authenticate and set 'cardNumber' field.
@@ -193,6 +206,10 @@ public class DB {
 
         return true;
     }
+
+    public String getDB_Url() {return db_url;}
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
 
 }
 
