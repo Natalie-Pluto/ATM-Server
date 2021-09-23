@@ -65,7 +65,7 @@ public class App {
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
+                    DB db = new DB(cardNumber, "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
