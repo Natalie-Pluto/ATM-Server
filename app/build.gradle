@@ -18,6 +18,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.testng:testng:7.1.0'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
+
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
 
@@ -43,4 +47,18 @@ application {
 
 run {
     standardInput = System.in
+}
+
+sourceSets {
+    integration {
+        java.srcDir "$projectDir/src/integration-test/java"
+        resources.srcDir "$projectDir/src/integration-test/resources"
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
 }
