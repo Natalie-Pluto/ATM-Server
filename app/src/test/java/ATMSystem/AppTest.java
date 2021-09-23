@@ -4,11 +4,16 @@
 package ATMSystem;
 
 import org.junit.Test;
+
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
     @Test public void appHasAGreeting() {
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
         App classUnderTest = new App(100000);
-        assertNotNull("app should have a greeting", classUnderTest.greetings());
+        assertNotNull("app should have a greeting", classUnderTest.greetings(timeOfDay));
     }
 }

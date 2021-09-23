@@ -91,17 +91,16 @@ public class App {
                         }
                         // ask user to enter the pin
                         int pinCounter = 0;
+                        System.out.println("Please enter the pin: ");
                         while (pinCounter < 3) {
                             pinCounter++;
-                            System.out.println("Please enter the pin: ");
                             String pin = app.timer();
                             if (!db.authenticate(cardNumber, pin)) {
                                 if (pinCounter == 1) {
                                     System.err.print("Wrong pin. Please enter again:\n" + "(You have 2 more attempts)\n");
-                                } else {
-                                    System.err.printf("Wrong pin. Please enter again:\n" + "(You have %d more attempt)\n", (3 - pinCounter));
-                                }
-                                if (pinCounter == 3) {
+                                } else if (pinCounter == 2){
+                                    System.err.print("Wrong pin. Please enter again:\n" + "(You have 1 more attempt)\n");
+                                } else if (pinCounter == 3) {
                                     System.err.print("Sorry, you have exceeded the allowed attempts, your card is blocked.\n" + "Please contact the staff if you need assistance.\n");
                                     db.setBlocked(true);
                                     Thread.sleep(3000);
