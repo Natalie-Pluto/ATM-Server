@@ -229,8 +229,7 @@ Now, you can use the application :)
     ```
 
 - ### **1 - Withdraw**
-    
-    The user will be asked to enter the amount to be withdrawn:
+    If user entered `1` which is 'Withdraw', the user will be asked to enter the amount to be withdrawn:
     ```
     Please enter the amount you want to withdraw:
     ```
@@ -259,6 +258,74 @@ Now, you can use the application :)
 
     Good Afternoon, welcome to XYZ Bank! Please enter your card number:
     ```
+    If the card has an insufficient amount available, an error message will be printed out to the
+    terminal. The account balance will be shown as well. They will be able to choose the service again:：
+    ```
+    Insufficient balance.
+    Available Account Balance: $10,000.00
+
+    --------------------------------------------------------------------
+
+    Please choose a service:
+    1.Withdraw    2.Deposit    3.Balance Check    4.Cancel
+    If you want to end the transaction, please choose cancel.
+    ```
+
+- ### **2 - Deposit**
+    If user entered `2` which is 'Deposit', the user will be asked to enter the amount to be deposited:
+    ```
+    Please enter the amount you want to deposit:
+    ```
+    If the deposit is approved, a receipt will be printed out to the terminal, and the program
+    will then return to the main page:
+  
+    ```
+    Transaction Succeed. Printing Receipt...
+
+    >>>>>>>> XYZ Bank --------------------------------------------------
+    Transaction Type: Deposit
+    Card Number: 10485
+    Amount Deposited: $500.00
+    Account Balance: $9,799.55
+    Transcation Number: cfe0ebdf-a886-43d9-a819-4b8cda835501
+    --------------------------------------------------------------------
+
+    End of transaction...
+    Ejecting card...
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+    Returning to the main page...
+
+    --------------------------------------------------------------------
+
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
+    ```
+    Coins can not be deposited, therefore an error message will be printed to the terminal
+    if the user tried to deposit coins. They will be able to choose the service again:
+    ```
+    Sorry, no coins can be deposited.
+    --------------------------------------------------------------------
+
+
+    Please choose a service number list below:
+    1.Withdraw    2.Deposit    3.Balance Check    4.Cancel
+    If you want to end the transaction, please choose cancel.
+    ```
+
+- ### **3 - Check Balance**
+    If user entered `3` which is 'Check Balance', the account balance will be shown in the terminal.
+    They will be able to choose the service again::
+    ```
+    --------------------------------------------------------------------
+    Account Balance: $9,299.55
+    --------------------------------------------------------------------
+    
+    Please choose a service number list below:
+    1.Withdraw    2.Deposit    3.Balance Check    4.Cancel
+    If you want to end the transaction, please choose cancel.
+    ```
+  
 
 - ### **4 - Cancel the Transaction**
 
@@ -277,9 +344,38 @@ Now, you can use the application :)
     Good Afternoon, welcome to XYZ Bank! Please enter your card number:
     ```
 
+- ### **Routine Maintenance**
+  If the ATM has insufficient cash available, the transaction will be ended, cash will be added to the ATM:
+  ```
+  --------------------------------------------------------------------
+  Sorry, this ATM has insufficient cash available.
+
+  End of Transaction...
+  Waiting staff to add cash...
+
+  Cash added.
+  Returning to main page.
+
+  --------------------------------------------------------------------
+
+  Good Evening, welcome to XYZ Bank! Please enter your card number:
+  ```
+
+- ### **Terminate the Application**
+  To terminate the application, type the passcode `CLOSE` at main page.
+
+
 ## **Tests**
 
 ---
+ Tests cases are available in :
+`/app/src/test/java/ATMSystem/AppTest.java`
+
+You can find the code coverage report here:
+`/app/build/reports`
+
+Or you can conduct black box testing with the information provides in 'Functionalities & Usages'
+section.
 
 
 

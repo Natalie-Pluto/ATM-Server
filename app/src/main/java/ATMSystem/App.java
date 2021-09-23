@@ -65,7 +65,7 @@ public class App {
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber, "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+                    DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
@@ -118,8 +118,9 @@ public class App {
                     // The card id valid, ask user to choose a service.
                     // Print the services options
                     boolean isContinue = true;
+                    int invalidCounter = 0;
                     while (isContinue) {
-                        System.out.print("Please choose a service:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
+                        System.out.print("Please choose a service number list below:\n" + "1.Withdraw    2.Deposit    3.Balance Check    4.Cancel\n");
                         System.out.println("If you want to end the transaction, please choose cancel.");
                         // Get the input (user got 120s to choose)
                         String service = app.timer();
@@ -221,6 +222,16 @@ public class App {
                                 endTrans();
                                 isContinue = false;
                                 isServiceOver = true;
+                                break;
+                            default:
+                                // Invalid service number is entered.
+                                invalidCounter++;
+                                if(invalidCounter > 2) {
+                                    endTrans();
+                                    isContinue = false;
+                                    isServiceOver = true;
+                                    break;
+                                }
                                 break;
                         }
                     }

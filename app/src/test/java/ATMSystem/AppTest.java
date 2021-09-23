@@ -73,37 +73,37 @@ public class AppTest {
     @Test
     public void testGetCardNumber(){
         //DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertEquals(db.getCardNumber(),"10000");
     }
 
     @Test
     public void testGetBalance(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertNotEquals(db.getBalance(), 10000);
     }
 
     @Test
     public void testGetBlocked(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertFalse(db.getBlocked());
     }
 
     @Test
     public void testGetConfiscated(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertFalse(db.getconfiscated());
     }
 
     @Test
     public void testSetBlocked(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         db.setBlocked(false);
     }
 
     @Test
     public void testAuthenticate() throws InterruptedException {
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         App app = new App(1000);
         provideInput("System");
         assertFalse(db.authenticate("10000", app.timer()));
@@ -111,13 +111,13 @@ public class AppTest {
 
     @Test
     public void testIsCardExist(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertTrue(db.isCardexist("10000"));
     }
 
     @Test
     public void testIsCardInfoMatch(){
-        DB db = new DB("10000", "postgres", "19981119", "jdbc:postgresql://localhost:5432/atmserver");
+        DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertTrue(db.isCardInfoMatch("10000"));
     }
 }

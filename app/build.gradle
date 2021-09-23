@@ -31,12 +31,11 @@ dependencies {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        html.enabled true
+        xml.required = false
+        html.required = true
     }
 }
 
-/*
 application {
     // Define the main class for the application.
     mainClass = 'ATMSystem.App'
@@ -45,4 +44,3 @@ application {
 run {
     standardInput = System.in
 }
-*/
