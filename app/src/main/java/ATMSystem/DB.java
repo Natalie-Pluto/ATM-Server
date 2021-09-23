@@ -168,7 +168,7 @@ public class DB {
         return false;
     }
 
-    public boolean isCardInfoMatch(String cardNum) {
+    public boolean isCardInfoMatch(String cardNum) throws InterruptedException {
         // Current date
         Date currentDate = new Date();
         Connection conn = null;
@@ -192,15 +192,19 @@ public class DB {
 
         if(getBlocked()) {
             System.err.println("Sorry, this card is blocked.");
+			msg();
             return false;
         } else if(getconfiscated()) {
             System.err.println("Sorry, this card is reported stolen or lost.");
+            msg();
             return false;
         } else if (expiredDate.before(currentDate)) {
             System.err.println("Sorry, this card is expired.");
+            msg();
             return false;
         } else if (issueDate.after(currentDate)) {
             System.err.println("Sorry, this card is not issued.");
+            msg();
             return false;
         }
 
@@ -211,6 +215,13 @@ public class DB {
     public String getUsername() { return username; }
     public String getPassword() { return password; }
 
+    public static void msg() throws InterruptedException {
+		Thread.sleep(2000);
+		System.out.println("Returning to the main page...\n");
+		System.out.println("--------------------------------------------------------------------");
+		System.out.print("\n");
+		Thread.sleep(2000);
+	}
 }
 
  

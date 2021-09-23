@@ -6,7 +6,6 @@ package ATMSystem;
 import org.junit.Test;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotEquals;
 
@@ -116,7 +115,7 @@ public class AppTest {
     }
 
     @Test
-    public void testIsCardInfoMatch(){
+    public void testIsCardInfoMatch() throws InterruptedException {
         DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertTrue(db.isCardInfoMatch("10000"));
     }
