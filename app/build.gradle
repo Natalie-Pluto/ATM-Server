@@ -11,6 +11,7 @@ plugins {
     id 'application'
 }
 
+apply plugin: 'jacoco'
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -28,6 +29,14 @@ dependencies {
 
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
+/*
 application {
     // Define the main class for the application.
     mainClass = 'ATMSystem.App'
@@ -36,3 +45,4 @@ application {
 run {
     standardInput = System.in
 }
+*/
