@@ -1,10 +1,10 @@
-#XYZ Bank ATM System
+# XYZ Bank ATM System
 
 ---
 
 An ATM application written in Java.
 
-##Table of Contents
+## Table of Contents
 
 ---
 * [General Info](#general-info)
@@ -146,7 +146,7 @@ Now, you can use the application :)
 
 - ### **Timer for User's Response**
 
-    A two minutes time limit is set for user's response. If no user's response in two minutes, the program will return
+    A two minutes timer is set for user's response. If no user's response in two minutes, the program will return
     to the main page:
     ```
     Time out!
@@ -192,6 +192,7 @@ Now, you can use the application :)
     ```
   
     If the card number is legal and exists in the database, it's issue date, expire date and state will be checked.
+    
     If any of above condition is invalid, a related error message will be printed out to the terminal, 
     and the program will return to main page.
     
@@ -259,7 +260,7 @@ Now, you can use the application :)
     Good Afternoon, welcome to XYZ Bank! Please enter your card number:
     ```
     If the card has an insufficient amount available, an error message will be printed out to the
-    terminal. The account balance will be shown as well. They will be able to choose the service again:：
+    terminal. The account balance will be shown as well. User will be able to choose the service again:：
     ```
     Insufficient balance.
     Available Account Balance: $10,000.00
@@ -371,10 +372,19 @@ Now, you can use the application :)
  Tests cases are available in :
 `/app/src/test/java/ATMSystem/AppTest.java`
 
-You can find the code coverage report here:
-`/app/build/reports`
+ You can run the tests and get a code coverage report by running the following commands:
 
-Or you can conduct black box testing with the information provides in 'Functionalities & Usages'
+```
+gradle clean build
+gradle test jacocoTestReport
+```
+
+You can find the code coverage report here:
+`/app/build/reports/jacoco/test/html/index.html`
+
+Or 
+
+You can conduct black box testing with the information provided in 'Functionalities & Usages'
 section.
 
 
