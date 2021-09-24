@@ -10,9 +10,9 @@ public class DBTests {
     //The test descriptions are contained in DBTests.txt.
 
     //good (valid) args
-    public static String db_url = "jdbc:postgresql://localhost:5432/a12412";
-    public static String username = "alien";
-    public static String password = "fuck";
+    public static String db_url = "<url>";
+    public static String username = "<username>";
+    public static String password = "<password>";
     public static String pin = "0000";  
     public static String cardNumber = "11111";
 
