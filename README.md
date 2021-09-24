@@ -372,6 +372,36 @@ Now, you can use the application :)
  Tests cases are available in :
 `/app/src/test/java/ATMSystem/AppTest.java`
 
+ Note that the testcases are made based on the data we have made in our database. If you wish to 
+run the tests, please insert the following data into your database:
+
+```
+BEGIN TRANSACTION;
+
+SET search_path to 'atmserver';
+
+INSERT INTO Card VALUES (10000, 1234, '2021-06-10', '2025-06-10', false, 10000, false);
+INSERT INTO Card VALUES (11111, 0000, '2020-01-13', '2025-01-13', false, 10000, false); -- required for DB testing
+INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99902,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99903,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99904,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99905,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99906,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99907,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99908,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99909,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99910,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99911,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99912,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99913,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99914,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99915,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99916,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+
+COMMIT;
+```
+
  You can run the tests and get a code coverage report by running the following commands:
 
 ```
