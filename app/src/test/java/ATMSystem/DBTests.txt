@@ -1,4 +1,4 @@
-List of ideas the for the testing the DB object with full coverage
+List of descriptions for tests in DBTests.java
 
 n. <description>:<todo/name of test method>
 
@@ -43,29 +43,55 @@ I. isCardExist METHOD TESTS
 2. check if card exists when card does not exist:isCardExist_I2
 
 J. isCardInfoMatch METHOD TESTS
-States of authenticated card: M (Matching), ! (Not operator), B (Blocked), E (Expired), I (Issued)
-1. M,B,!E,!I:todo
-2. !M,B,!E,!I:todo
-3. M,!B,!E,!I:todo
-4. !M,!B,!E,!I:todo
-5. M,B,E,!I:todo
-6. !M,B,E,!I:todo
-7. M,!B,E,!I:todo
-8. !M,!B,E,!I:todo
-9. M,B,!E,I:todo
-10.!M,B,!E,I:todo 
-11. M,!B,!E,I:todo 
-12. !M,!B,!E,I:todo 
-13. M,B,E,I:todo
-14. !M,B,E,I:todo
-15. M,!B,E,I:todo
-16.!M,!B,E,I:todo
-17. no card is authenticated:todo
+States: M (Matching), ! (Not operator), B (Blocked), E (Expired), I (Issued)
+1. B,E,I,C:isCardInfoMatch_J1
+2. !B,E,I,C:isCardInfoMatch_J2
+3. B,!E,I,C:isCardInfoMatch_J3
+4. !B,!E,I,C:isCardInfoMatch_J4
+5. B,E,!I,C:isCardInfoMatch_J5
+6. !B,E,!I,C:isCardInfoMatch_J6
+7. B,!E,!I,C:isCardInfoMatch_J7
+8. !B,!E,!I,C:isCardInfoMatch_J8
+9. B,E,I,!C:isCardInfoMatch_J9
+10. !B,E,I,!C:isCardInfoMatch_J10
+11. B,!E,I,!C:isCardInfoMatch_J11
+12. !B,!E,I,!C:isCardInfoMatch_J12
+13. B,E,!I,!C:isCardInfoMatch_J13
+14. !B,E,!I,!C:isCardInfoMatch_J14
+15. B,!E,!I,!C:isCardInfoMatch_J15
+16. !B,!E,!I,!C:isCardInfoMatch_J16
+
 
 K. FIELD GETTER TESTS
 1. get database connection username:todo
 2. get database connection url:todo
 3. get database connection password:todo
 
+THE FOLLOWING CARDS MUST BE ADDED TO THE DATABASE FOR THE TESTS TO WORK (SQL SCRIPT WHICH INSERTS REQUIRED CARDS)
+note: these cards are included in atmserver_sampledata.sql
+
+BEGIN TRANSACTION;
+
+SET search_path to 'atmserver';
+
+INSERT INTO Card VALUES (11111, 0000, '2020-01-13', '2025-01-13', false, 10000, false); -- required for DB testing
+INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true) -- required for DB testing
+INSERT INTO Card VALUES (99902,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99903,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99904,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99905,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99906,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99907,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99908,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99909,0000,'2020-11-23','2021-1-20',true,10000,false) -- required for DB testing
+INSERT INTO Card VALUES (99910,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99911,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99912,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99913,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99914,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99915,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99916,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+
+COMMIT;
 
 

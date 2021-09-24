@@ -166,6 +166,8 @@ public class DB {
 
     public boolean isCardInfoMatch(String cardNum) {
         // Current date
+        String initialCardNum = this.cardNumber;
+        this.cardNumber = cardNum;
         Date currentDate = new Date();
         Connection conn = null;
         String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNum  + "';";
@@ -183,23 +185,29 @@ public class DB {
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
+            this.cardNumber = initialCardNum;
             return false;
-        }
+        } 
 
         if(getBlocked()) {
             System.err.println("Sorry, this card is blocked.");
+            this.cardNumber = initialCardNum;
             return false;
         } else if(getConfiscated()) {
             System.err.println("Sorry, this card is reported stolen or lost.");
+            this.cardNumber = initialCardNum;
             return false;
         } else if (expiredDate.before(currentDate)) {
             System.err.println("Sorry, this card is expired.");
+            this.cardNumber = initialCardNum;
             return false;
         } else if (issueDate.after(currentDate)) {
             System.err.println("Sorry, this card is not issued.");
+            this.cardNumber = initialCardNum;
             return false;
         }
-
+        
+        this.cardNumber = initialCardNum;
         return true;
     }
 

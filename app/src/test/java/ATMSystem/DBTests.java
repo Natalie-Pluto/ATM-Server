@@ -187,7 +187,86 @@ public class DBTests {
     @Test public void isCardExists_I2() {
         DB x = new DB(cardNumber, username, password, db_url);
         assertFalse(x.isCardexist(bad_cardNumber));
- 
+    }
+
+    @Test public void isCardInfoMatch_J1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99901"));
+    }
+
+    @Test public void isCardInfoMatch_J2() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99902"));
+    }
+
+    @Test public void isCardInfoMatch_J3() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99903"));
+    }
+
+     @Test public void isCardInfoMatch_J4() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99904"));
+    }
+   
+    @Test public void isCardInfoMatch_J5() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99905"));
+    }
+
+    @Test public void isCardInfoMatch_J6() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99906"));
+    }
+
+    @Test public void isCardInfoMatch_J7() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99907"));
+    }
+
+    @Test public void isCardInfoMatch_J8() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99908"));
+    }
+
+    @Test public void isCardInfoMatch_J9() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99909"));
+    }
+
+    @Test public void isCardInfoMatch_J10() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99910"));
+    }
+
+    @Test public void isCardInfoMatch_J11() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99911"));
+    }
+
+    @Test public void isCardInfoMatch_J12() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertTrue(x.isCardInfoMatch("99912"));
+    }
+
+    @Test public void isCardInfoMatch_J13() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99913"));
+    }
+
+    @Test public void isCardInfoMatch_J14() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99914"));
+    }
+
+    @Test public void isCardInfoMatch_J15() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99915"));
+    }
+
+    @Test public void isCardInfoMatch_J16() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardInfoMatch("99916"));
     }
 
 }

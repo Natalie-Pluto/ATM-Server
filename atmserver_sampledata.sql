@@ -13,23 +13,22 @@ INSERT INTO Card VALUES (94850, 7788, '2020-06-13', '2025-06-13', false, 10000, 
 INSERT INTO Card VALUES (85303, 9900, '2020-10-20', '2025-10-20', false, 10000, false);
 INSERT INTO Card VALUES (93503, 0011, '2018-03-13', '2022-03-13', false, 10000, false);
 INSERT INTO Card VALUES (10485, 4455, '2020-11-23', '2023-11-23', false, 10000, false);
-INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true) -- required for DB testing
+INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99902,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99903,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99904,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99905,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99906,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99907,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99908,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,false) -- required for DB testing
-INSERT INTO Card VALUES (99902,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99903,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99904,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99905,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99906,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99907,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
-INSERT INTO Card VALUES (99908,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
-
+INSERT INTO Card VALUES (99905,0000,'2022-11-23','2021-1-20',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99906,0000,'2022-11-23','2021-1-20',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99907,0000,'2022-11-23','2026-1-21',true,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99908,0000,'2022-11-23','2026-1-21',false,10000,true); -- required for DB testing
+INSERT INTO Card VALUES (99909,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99910,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99911,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99912,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99913,0000,'2022-11-23','2021-1-20',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99914,0000,'2022-11-23','2021-1-20',false,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99915,0000,'2022-11-23','2026-1-21',true,10000,false); -- required for DB testing
+INSERT INTO Card VALUES (99916,0000,'2022-11-23','2026-1-21',false,10000,false); -- required for DB testing
 
 COMMIT;
 
