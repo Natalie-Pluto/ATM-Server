@@ -102,8 +102,8 @@ public class DB {
 	public String getCardNumber() {return this.cardNumber;}
 
 	// confiscated methods
-	public void setConfiscated(boolean x) {sql_update("confiscated", x);}
-	public Boolean getConfiscated() {return sql_getBoolean("confiscated");}
+	public void setconfiscated(boolean x) {sql_update("confiscated", x);}
+	public Boolean getconfiscated() {return sql_getBoolean("confiscated");}
 
 	// blocked methods
 	public void setBlocked(boolean x) {sql_update("blocked", x);}
