@@ -33,6 +33,9 @@ public class App {
                 if (cardEnterCounter == 0) {
                     // The first user's input does not have timer
                     cardNumber = userInput.nextLine();
+                    if(cardNumber.equals("CLOSE")) {
+                        System.exit(0);
+                    }
                 } else {
                     // 120s timer
                     cardNumber = app.timer();

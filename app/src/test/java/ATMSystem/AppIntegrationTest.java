@@ -49,14 +49,14 @@ public class AppIntegrationTest {
         System.setErr(systemErr);
     }
 
-    /*@Test
+    @Test
     public void invalidCardnum() throws InterruptedException {
         setUpOutput();
-        getInput("10000");
+        getInput("ABC");
         getInput("CLOSE");
         App.main(new String[]{});
         assertNotNull(getOutput());
-    }*/
+    }
 
     @Test
     public void Messages() throws InterruptedException {
@@ -73,6 +73,7 @@ public class AppIntegrationTest {
         app.balance("10000");
         app.timeOut();
     }
+
 
     /*@Test
     public void testRightInput() throws InterruptedException{
