@@ -158,6 +158,8 @@ public class DBTests {
     public void getBalanceNotAuthenticated_H2() {
         DB x = new DB(bad_cardNumber, username, password, db_url);
         Double bal = x.getBalance();
+        System.out.print("bal: ");
+        System.out.println(bal);
         assertTrue(bal == null);
     }
 
@@ -169,7 +171,7 @@ public class DBTests {
 
     @Test
     public void setBalanceAuthenticated_H4() {
-        DB x = new DB(bad_cardNumber, username, password, db_url);
+        DB x = new DB(cardNumber, username, password, db_url);
         Double bal = x.sql_getDouble("balance");
         x.setBalance(bal - 1);
         assertTrue(x.getBalance() ==bal - 1);

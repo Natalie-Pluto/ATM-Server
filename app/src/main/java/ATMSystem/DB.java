@@ -88,7 +88,7 @@ public class DB {
 			ResultSet result = stmt.executeQuery(sql);
 			if (result.next()) {
 				output = result.getDouble(column);
-			}
+			} else return null;
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
