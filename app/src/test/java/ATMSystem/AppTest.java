@@ -91,7 +91,7 @@ public class AppTest {
     @Test
     public void testGetConfiscated(){
         DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
-        assertFalse(db.getconfiscated());
+        assertFalse(db.getConfiscated());
     }
 
     @Test

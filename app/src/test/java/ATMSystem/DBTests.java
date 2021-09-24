@@ -10,9 +10,9 @@ public class DBTests {
     //The test descriptions are contained in DBTests.txt.
 
     //good (valid) args
-    public static String db_url = "<url>";
-    public static String username = "<username>";
-    public static String password = "<password>";
+    public static String db_url = "jdbc:postgresql://localhost:5432/a12412";
+    public static String username = "alien";
+    public static String password = "fuck";
     public static String pin = "0000";  
     public static String cardNumber = "11111";
 
@@ -191,82 +191,128 @@ public class DBTests {
 
     @Test public void isCardInfoMatch_J1() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99901"));
+        try {
+            assertFalse(x.isCardInfoMatch("99901"));
+        } catch (InterruptedException e) {}
     }
 
     @Test public void isCardInfoMatch_J2() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99902"));
+        try {
+            assertFalse(x.isCardInfoMatch("99902"));
+        } catch (InterruptedException e) {}
     }
 
     @Test public void isCardInfoMatch_J3() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99903"));
+        try {
+            assertFalse(x.isCardInfoMatch("99903"));
+        } catch (InterruptedException e) {}
+
     }
 
      @Test public void isCardInfoMatch_J4() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99904"));
+        try {
+            assertFalse(x.isCardInfoMatch("99904"));
+        } catch (InterruptedException e) {}
+
     }
    
     @Test public void isCardInfoMatch_J5() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99905"));
+        try {
+            assertFalse(x.isCardInfoMatch("99905"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J6() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99906"));
+        try {
+            assertFalse(x.isCardInfoMatch("99906"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J7() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99907"));
+        try {
+            assertFalse(x.isCardInfoMatch("99907"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J8() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99908"));
+        try {
+            assertFalse(x.isCardInfoMatch("99908"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J9() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99909"));
+        try {
+            assertFalse(x.isCardInfoMatch("99909"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J10() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99910"));
+        try {
+            assertFalse(x.isCardInfoMatch("99910"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J11() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99911"));
+        try {
+            assertFalse(x.isCardInfoMatch("99911"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J12() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertTrue(x.isCardInfoMatch("99912"));
+        try {
+            assertTrue(x.isCardInfoMatch("99912"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J13() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99913"));
+        try {
+            assertFalse(x.isCardInfoMatch("99913"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J14() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99914"));
+        try {
+            assertFalse(x.isCardInfoMatch("99914"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J15() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99915"));
+        try {
+            assertFalse(x.isCardInfoMatch("99915"));
+        } catch (InterruptedException e) {}
+
     }
 
     @Test public void isCardInfoMatch_J16() {
         DB x = new DB(cardNumber, username, password, db_url);
-        assertFalse(x.isCardInfoMatch("99916"));
+        try {
+            assertFalse(x.isCardInfoMatch("99916"));
+        } catch (InterruptedException e) {}
+
     }
 
 }
