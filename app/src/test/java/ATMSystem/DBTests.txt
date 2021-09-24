@@ -38,9 +38,9 @@ H. balance GET/SET TESTS
 3. set balance when not authenticated:setBalanceNotAuthenticated_H3
 4. set balance when authenticated:setBalanceAuthenticated_H4
 
-I. isCardExists METHOD TESTS
-1. check if card exists when card exists:todo
-2. check if card exists when card does not exist:todo
+I. isCardExist METHOD TESTS
+1. check if card exists when card exists:isCardExist_I1
+2. check if card exists when card does not exist:isCardExist_I2
 
 J. isCardInfoMatch METHOD TESTS
 States of authenticated card: M (Matching), ! (Not operator), B (Blocked), E (Expired), I (Issued)

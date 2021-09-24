@@ -174,10 +174,20 @@ public class DBTests {
         DB x = new DB(cardNumber, username, password, db_url);
         Double bal = x.sql_getDouble("balance");
         x.setBalance(bal - 1);
-        assertTrue(x.getBalance() ==bal - 1);
+        assertTrue(x.getBalance() == bal - 1);
         x.setBalance(bal);
     }
 
-    
+    @Test
+    public void isCardExists_I1() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertTrue(x.isCardexist(cardNumber));
+    }
+
+    @Test public void isCardExists_I2() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        assertFalse(x.isCardexist(bad_cardNumber));
+ 
+    }
 
 }
