@@ -9,6 +9,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'jacoco'
+    
 }
 
 apply plugin: 'jacoco'
@@ -30,6 +32,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+
+    //https://site.mockito.org/
+    //testImplementation "org.mockito:mockito-core:3.+"
 
 }
 

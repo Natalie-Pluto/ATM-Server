@@ -12,13 +12,25 @@ public class DB {
 	// This variable is set by the authenticate method.
 	private String cardNumber;
 	public DB(String cardNumber, String username, String password, String db_url) {
-	    this.cardNumber = cardNumber;
-		this.username = username;
-		this.password = password;
-		this.db_url = db_url;
+        this.cardNumber = cardNumber;
+        setConnectionFields(username, password, db_url);
 	}
+
+    public boolean db_connection_test(String username, String password, String db_url) {
+        // This method checks whether a db_url, username and password combination enables database connection.
+        // True is returned if connection is successful.
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(db_url, username, password);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 	
-	private <T> boolean sql_update(String column, T value) {
+	public <T> boolean sql_update(String column, T value) {
 		// Takes column name and value to update column value to.
 		// The column value is updated for the row containing
 		// the card number that is currently authenticated. If 
@@ -38,7 +50,7 @@ public class DB {
 		return true;
 	}
 
-	private Boolean sql_getBoolean(String column) {
+	public Boolean sql_getBoolean(String column) {
 		// Takes column name and returns the value of the column for row 
 		// containing the card number currently authenticated. If no card is 
 		// authenticated, then null is returned.
@@ -52,7 +64,7 @@ public class DB {
 			ResultSet result = stmt.executeQuery(sql);
 			if (result.next()) {
 				output = result.getBoolean(column);
-			}
+			} else return null;
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -62,7 +74,7 @@ public class DB {
 		return output;
 	}
 
-	private Double sql_getDouble(String column) {
+	public Double sql_getDouble(String column) {
 		// Takes column name and returns the value of the column for row
 		// containing the card number currently authenticated. If no card 
 		// is authenticated, then null is returned.
@@ -76,7 +88,7 @@ public class DB {
 			ResultSet result = stmt.executeQuery(sql);
 			if (result.next()) {
 				output = result.getDouble(column);
-			}
+			} else return null;
 			stmt.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -90,48 +102,32 @@ public class DB {
 	public String getCardNumber() {return this.cardNumber;}
 
 	// confiscated methods
-	public void setConfiscated(boolean x) {
-		sql_update("confiscated", x);
-	}
-
-	public boolean getconfiscated() {
-		return sql_getBoolean("confiscated");
-	}
+	public void setConfiscated(boolean x) {sql_update("confiscated", x);}
+	public Boolean getConfiscated() {return sql_getBoolean("confiscated");}
 
 	// blocked methods
-	public void setBlocked(boolean x) {
-		sql_update("blocked", x);
-	}
-
-	public boolean getBlocked() {
+	public void setBlocked(boolean x) {sql_update("blocked", x);}
+	public Boolean getBlocked() {
 		return sql_getBoolean("blocked");
 	}
 
 	// balance methods
-	public void setBalance(double x) {
-		sql_update("balance", x);
-	}
-
-	public double getBalance() {
-		return sql_getDouble("balance");
-	}
+	public void setBalance(double x) {sql_update("balance", x);}
+	public Double getBalance() {return sql_getDouble("balance");} 
 
 
 	//authenticate and set 'cardNumber' field.
 	public boolean authenticate(String cardNumber, String pin) {
-
-		/*
-        This method checks if the cardNum and pin represent a row in the card table, if yes 
-        then true is returned. If cardNum or pin are invalid or the combination does not exist
-        in the card table, false is returned.
-        */
+        //This method checks if the cardNum and pin represent a row in the card table, if yes 
+        //then true is returned. If cardNum or pin are invalid or the combination does not exist
+        //in the card table, false is returned.
 
         Connection conn = null;
         String query = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNumber  + "' AND pin = '" + pin + "';";
 
         try {
             conn = DriverManager.getConnection(db_url, username, password);
-            Statement stmt = conn.createStatement();
+            Statement stmt = conn.createStatement(); 
             ResultSet result = stmt.executeQuery(query);
             if (result.next()) {
                 this.cardNumber = cardNumber;
@@ -170,6 +166,8 @@ public class DB {
 
     public boolean isCardInfoMatch(String cardNum) throws InterruptedException {
         // Current date
+        String initialCardNum = this.cardNumber;
+        this.cardNumber = cardNum;
         Date currentDate = new Date();
         Connection conn = null;
         String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNum  + "';";
@@ -187,14 +185,16 @@ public class DB {
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
+            this.cardNumber = initialCardNum;
             return false;
-        }
+        } 
 
         if(getBlocked()) {
             System.err.println("Sorry, this card is blocked.");
 			msg();
+            this.cardNumber = initialCardNum;
             return false;
-        } else if(getconfiscated()) {
+        } else if(getConfiscated()) {
             System.err.println("Sorry, this card is reported stolen or lost.");
             msg();
             return false;
@@ -205,15 +205,40 @@ public class DB {
         } else if (issueDate.after(currentDate)) {
             System.err.println("Sorry, this card is not issued.");
             msg();
+            this.cardNumber = initialCardNum;
+            return false;
+        } else if (expiredDate.before(currentDate)) {
+            System.err.println("Sorry, this card is expired.");
+            this.cardNumber = initialCardNum;
+            return false;
+        } else if (issueDate.after(currentDate)) {
+            System.err.println("Sorry, this card is not issued.");
+            this.cardNumber = initialCardNum;
             return false;
         }
-
+        
+        this.cardNumber = initialCardNum;
         return true;
     }
 
     public String getDB_Url() {return db_url;}
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
+
+    public String getUsername() {return username;}
+
+    public String getPassword() {return password;}
+
+    public boolean setConnectionFields(String username, String password, String db_url) {
+        if (db_connection_test(username, password, db_url)) {
+            //The fields are only set if they are valid.
+            //If they are invalid, then they must be reassigned, 
+            // using this method.
+            this.db_url = db_url;
+            this.username = username;
+            this.password = password;
+            return true;
+        }
+        return false;
+    }
 
     public static void msg() throws InterruptedException {
 		Thread.sleep(2000);
