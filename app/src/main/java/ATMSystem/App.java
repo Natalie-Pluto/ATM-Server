@@ -21,12 +21,12 @@ public class App {
     }
 
     public void run() throws InterruptedException {
-        while (true) {
-            // Greetings and ask user to insert their card for validity check.
-            Calendar c = Calendar.getInstance();
-            int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-            System.out.println(instance.greetings(timeOfDay));
-            Scanner userInput = new Scanner(System.in);
+        // Greetings and ask user to insert their card for validity check.
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        System.out.println(instance.greetings(timeOfDay));
+        Scanner userInput = new Scanner(System.in);
+        while (userInput.hasNext()) {
             // If the service for an user is over, return to the greeting page.
             boolean isServiceOver = false;
             // Count the times of enter
@@ -72,6 +72,7 @@ public class App {
                         boolean correctCardinfo;
                         correctCardinfo = db.isCardInfoMatch(cardNumber);
                         if (!correctCardinfo) {
+                            printGreetings();
                             break;
                         }
                         // ask user to enter the pin
@@ -204,6 +205,13 @@ public class App {
         }
     }
 
+    public void printGreetings() {
+        // Greetings and ask user to insert their card for validity check.
+        Calendar c = Calendar.getInstance();
+        int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+        System.out.println(greetings(timeOfDay));
+    }
+
     // Set a timer of 120s for user's input
     // Source from: https://stackoverflow.com/questions/49578598/timelimit-for-valid-java-input-without-system-exit
     public String timer() throws InterruptedException {
@@ -279,6 +287,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(3000);
+        instance.printGreetings();
     }
 
 
@@ -300,6 +309,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(2000);
+        printGreetings();
     }
 
     public void timeOut() throws InterruptedException {
@@ -312,6 +322,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(2000);
+        printGreetings();
     }
 
     public void illegalCardMsg() throws InterruptedException {
@@ -325,6 +336,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(2000);
+        printGreetings();
     }
 
     public void cardNotexistMsg() throws InterruptedException {
@@ -338,6 +350,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(2000);
+        printGreetings();
     }
 
     public void pinMsg(int num) throws InterruptedException {
@@ -356,6 +369,7 @@ public class App {
             System.out.println("--------------------------------------------------------------------");
             System.out.print("\n");
             Thread.sleep(3000);
+            printGreetings();
         }
     }
 

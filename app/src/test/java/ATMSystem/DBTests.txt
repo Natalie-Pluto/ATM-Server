@@ -92,7 +92,7 @@ INSERT INTO Card VALUES (99913,0000,'2020-11-23','2021-1-20',true,10000,false); 
 INSERT INTO Card VALUES (99914,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99915,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99916,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
-
+INSERT INTO Card VALUES (99917,0000,'2022-11-23','2026-1-21',false,10000,false);
 
 COMMIT;
 
