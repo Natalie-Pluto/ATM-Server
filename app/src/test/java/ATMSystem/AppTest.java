@@ -115,4 +115,21 @@ public class AppTest {
         DB db = new DB("10000", "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
         assertTrue(db.isCardInfoMatch("10000"));
     }
+
+    @Test
+    public void Messages() throws InterruptedException {
+        App app = new App(10000);
+        app.serviceMsg();
+        app.depositMsg();
+        app.atmMsg();
+        app.cardNotexistMsg();
+        app.illegalCardMsg();
+        app.pinMsg(1);
+        app.pinMsg(2);
+        app.pinMsg(3);
+        app.withdrawInsMsg("10000");
+        app.balance("10000");
+        app.timeOut();
+        app.endTrans();
+    }
 }

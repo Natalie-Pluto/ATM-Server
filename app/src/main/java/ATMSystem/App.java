@@ -240,7 +240,7 @@ public class App {
         int i = 0;
         String str;
         do {
-            str = deque.poll(10, TimeUnit.SECONDS);
+            str = deque.poll(2, TimeUnit.SECONDS);
             i++;
         } while (i < 1);
 
@@ -276,7 +276,7 @@ public class App {
     }
 
     // End of Transaction
-    public static void endTrans() throws InterruptedException {
+    public void endTrans() throws InterruptedException {
         // End of transaction
         System.out.println("End of transaction...\n");
         System.out.println("Ejecting card...\n");
@@ -287,7 +287,7 @@ public class App {
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
         Thread.sleep(3000);
-        instance.printGreetings();
+        printGreetings();
     }
 
 

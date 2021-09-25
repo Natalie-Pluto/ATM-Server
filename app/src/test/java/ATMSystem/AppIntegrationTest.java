@@ -1,5 +1,6 @@
 package ATMSystem;
 
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,29 +50,122 @@ public class AppIntegrationTest {
         System.setErr(systemErr);
     }
 
-    @Test
-    public void invalidCardnum() throws InterruptedException {
+   @Test
+    public void invalidCardnum1() throws InterruptedException {
         setUpOutput();
-        getInput("ABC");
-        getInput("CLOSE");
-        App.main(new String[]{});
+        getInput( "ABC" + System.lineSeparator() + "ABC" + System.lineSeparator() + "ABC" + System.lineSeparator() + "ABC" + System.lineSeparator() + "ABC" + System.lineSeparator() + "CLOSE");
+        App.main(null);
         assertNotNull(getOutput());
     }
 
     @Test
-    public void Messages() throws InterruptedException {
-        App app = new App(10000);
-        app.serviceMsg();
-        app.depositMsg();
-        app.atmMsg();
-        app.cardNotexistMsg();
-        app.illegalCardMsg();
-        app.pinMsg(1);
-        app.pinMsg(2);
-        app.pinMsg(3);
-        app.withdrawInsMsg("10000");
-        app.balance("10000");
-        app.timeOut();
+    public void wrongPin() throws InterruptedException {
+        setUpOutput();
+        getInput( "10000" + System.lineSeparator() + "1" + System.lineSeparator() + "1" + System.lineSeparator() + "j" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+    }
+
+    @Test
+    public void invalidCardinfoTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "99917" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+
+/*
+    @Test
+    public void cardNotExist() throws InterruptedException {
+        setUpOutput();
+        getInput( "22222"  + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+    }
+
+    @Test
+    public void checkBalanceTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485"  + "4455" + "3" + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+    }
+
+
+
+    /* @Test
+    public void invalidCardnum2() throws InterruptedException {
+        setUpOutput();
+        getInput( "ABC" + System.lineSeparator() + "efg" + System.lineSeparator() + "123" + System.lineSeparator() + "jjj" + System.lineSeparator() + "1" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }*/
+/*
+    @Test
+    public void cancelTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "4"  + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void WithdrawTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "1"  + System.lineSeparator() + "5" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void WithdrawTest2() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "1"  + System.lineSeparator() + "50000000" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void DepositTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "2"  + System.lineSeparator() + "50" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void DepositTest2() throws InterruptedException {
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "2"  + System.lineSeparator() + "5.5" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void invalidCardinfoTest() throws InterruptedException {
+        setUpOutput();
+        getInput( "99902" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
+    }
+
+    @Test
+    public void atmTest() throws InterruptedException {
+        App app = new App(10);
+        setUpOutput();
+        getInput( "10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "1"  + System.lineSeparator() + "500" + System.lineSeparator() + "CLOSE");
+        App.main(null);
+        assertNotNull(getOutput());
+        reset();
     }
 
 
