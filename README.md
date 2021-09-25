@@ -10,7 +10,7 @@ An ATM application written in Java.
 * [General Info](#general-info)
 * [Setup](#setup)
 * [Run the Program](#run-the-program)
-* [Functionalities & Usages](#functionalities&usages)
+* [Functionalities and Usages](#functionalities-and-usages)
 * [Tests](#tests)
 * [Project Contributors](#project-contributors)
 * [Reference](#reference)
@@ -132,7 +132,7 @@ Good Morning, welcome to XYZ Bank! Please enter your card number:
 ```
 Now, you can use the application :)
 
-## Functionalities & Usages
+## Functionalities and Usages
 
 ---
 - ### **User's Interface**
