@@ -10,9 +10,9 @@ public class DBTests {
     //The test descriptions are contained in DBTests.txt.
 
     //good (valid) args
-    public static String db_url = "jdbc:postgresql://localhost:5432/a12412";
-    public static String username = "alien";
-    public static String password = "fuck";
+    public static String db_url = "jdbc:postgresql://localhost:5433/atmserver";
+    public static String username = "postgres";
+    public static String password = "0000";
     public static String pin = "0000";  
     public static String cardNumber = "11111";
 
@@ -310,7 +310,15 @@ public class DBTests {
     @Test public void isCardInfoMatch_J16() {
         DB x = new DB(cardNumber, username, password, db_url);
         try {
-            assertFalse(x.isCardInfoMatch("99916"));
+            assertTrue(x.isCardInfoMatch("99916"));
+        } catch (InterruptedException e) {}
+
+    }
+
+    @Test public void isCardInfoMatch_J17() {
+        DB x = new DB(cardNumber, username, password, db_url);
+        try {
+            assertFalse(x.isCardInfoMatch("99917"));
         } catch (InterruptedException e) {}
 
     }

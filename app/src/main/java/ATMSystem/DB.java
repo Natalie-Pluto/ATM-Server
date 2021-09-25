@@ -173,6 +173,7 @@ public class DB {
         String sql = "SELECT * FROM atmserver.\"card\" WHERE card_number = '" + cardNum  + "';";
         Date issueDate = null;
         Date expiredDate = null;
+        boolean isMatch = true;
         try {
             conn = DriverManager.getConnection(db_url, username, password);
             Statement stmt = conn.createStatement();
@@ -191,34 +192,32 @@ public class DB {
 
         if(getBlocked()) {
             System.err.println("Sorry, this card is blocked.");
-			msg();
             this.cardNumber = initialCardNum;
-            return false;
-        } else if(getConfiscated()) {
-            System.err.println("Sorry, this card is reported stolen or lost.");
-            msg();
-            return false;
-        } else if (expiredDate.before(currentDate)) {
-            System.err.println("Sorry, this card is expired.");
-            msg();
-            return false;
-        } else if (issueDate.after(currentDate)) {
-            System.err.println("Sorry, this card is not issued.");
-            msg();
-            this.cardNumber = initialCardNum;
-            return false;
-        } else if (expiredDate.before(currentDate)) {
-            System.err.println("Sorry, this card is expired.");
-            this.cardNumber = initialCardNum;
-            return false;
-        } else if (issueDate.after(currentDate)) {
-            System.err.println("Sorry, this card is not issued.");
-            this.cardNumber = initialCardNum;
-            return false;
+            isMatch = false;
         }
-        
+        if(getConfiscated()) {
+            System.err.println("Sorry, this card is reported stolen or lost.");
+            this.cardNumber = initialCardNum;
+            isMatch = false;
+        }
+        if (expiredDate.before(currentDate)) {
+            System.err.println("Sorry, this card is expired.");
+            this.cardNumber = initialCardNum;
+            isMatch = false;
+        }
+
+        if (issueDate.after(currentDate)) {
+            System.err.println("Sorry, this card is not issued.");
+            this.cardNumber = initialCardNum;
+            isMatch = false;
+        }
+
+        if(!isMatch) {
+            msg();
+        }
+
         this.cardNumber = initialCardNum;
-        return true;
+        return isMatch;
     }
 
     public String getDB_Url() {return db_url;}
@@ -241,11 +240,15 @@ public class DB {
     }
 
     public static void msg() throws InterruptedException {
-		Thread.sleep(2000);
-		System.out.println("Returning to the main page...\n");
-		System.out.println("--------------------------------------------------------------------");
-		System.out.print("\n");
-		Thread.sleep(2000);
+        Thread.sleep(2000);
+        System.out.println("Ejecting card...\n");
+        Thread.sleep(2000);
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
+        Thread.sleep(3000);
+        System.out.println("Returning to the main page...\n");
+        System.out.println("--------------------------------------------------------------------");
+        System.out.print("\n");
+        Thread.sleep(3000);
 	}
 }
 

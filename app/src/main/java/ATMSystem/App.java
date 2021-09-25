@@ -265,10 +265,10 @@ public class App {
     // End of Transaction
     public static void endTrans() throws InterruptedException {
         // End of transaction
-        System.out.println("End of transaction...");
-        System.out.println("Ejecting card...");
+        System.out.println("End of transaction...\n");
+        System.out.println("Ejecting card...\n");
         Thread.sleep(2000);
-        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n");
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
         Thread.sleep(3000);
         System.out.println("Returning to the main page...\n");
         System.out.println("--------------------------------------------------------------------");
@@ -287,10 +287,10 @@ public class App {
     }
 
     public void addAtmCash(double amount) throws InterruptedException {
-        System.out.println("Waiting staff to add cash...");
+        System.out.println("Waiting staff to add cash...\n");
         Thread.sleep(2000);
         this.atmBalance = getAtmBalance() + amount;
-        System.out.println("Cash added.");
+        System.out.println("Cash added.\n");
         System.out.println("Returning to main page.\n");
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
@@ -298,7 +298,11 @@ public class App {
     }
 
     public void timeOut() throws InterruptedException {
-        System.err.println("Time out!");
+        System.err.println("Time out!\n");
+        System.out.println("Ejecting card...\n");
+        Thread.sleep(2000);
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
+        Thread.sleep(2000);
         System.out.println("Returning to the main page...\n");
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
@@ -306,7 +310,11 @@ public class App {
     }
 
     public void illegalCardMsg() throws InterruptedException {
-        System.err.println("Exceed the enter limit, please contact the front desk to check on your card number.");
+        System.err.println("Exceed the enter limit, please contact the front desk to check on your card number.\n");
+        Thread.sleep(2000);
+        System.out.println("Ejecting card...\n");
+        Thread.sleep(2000);
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
         Thread.sleep(2000);
         System.out.println("Returning to the main page...\n");
         System.out.println("--------------------------------------------------------------------");
@@ -316,6 +324,10 @@ public class App {
 
     public void cardNotexistMsg() throws InterruptedException {
         System.err.println("Sorry, this card is not recorded in our system.\nPlease contact the staff.\n");
+        Thread.sleep(2000);
+        System.out.println("Ejecting card...\n");
+        Thread.sleep(2000);
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
         Thread.sleep(2000);
         System.out.println("Returning to the main page...\n");
         System.out.println("--------------------------------------------------------------------");
@@ -329,8 +341,12 @@ public class App {
         } else if (num == 2){
             System.err.print("Wrong pin. Please enter again:\n" + "(You have 1 more attempt)\n");
         } else if (num == 3) {
-            System.err.print("Sorry, you have exceeded the allowed attempts, your card is blocked.\n" + "Please contact the staff if you need assistance.\n");
+            System.err.print("Sorry, you have exceeded the allowed attempts, your card is blocked.\n" + "Please contact the staff if you need assistance.\n\n");
             Thread.sleep(3000);
+            System.out.println("Ejecting card...\n");
+            Thread.sleep(2000);
+            System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n\n");
+            Thread.sleep(2000);
             System.out.println("Returning to the main page...\n");
             System.out.println("--------------------------------------------------------------------");
             System.out.print("\n");
@@ -352,9 +368,13 @@ public class App {
         System.out.print("\n");
     }
 
-    public void atmMsg() {
-        System.err.println("Sorry, this ATM has insufficient cash available.");
+    public void atmMsg() throws InterruptedException {
+        System.err.println("Sorry, this ATM has insufficient cash available.\n");
         System.err.println("End of Transaction...\n");
+        System.out.println("Ejecting card...\n");
+        Thread.sleep(2000);
+        System.out.print("Thank you for using XYZ Bank ATM!\nPlease don't forget to take your card.\nLooking forward to your next visit.\n");
+        Thread.sleep(2000);
         System.out.println("--------------------------------------------------------------------");
         System.out.print("\n");
     }

@@ -10,7 +10,7 @@ An ATM application written in Java.
 * [General Info](#general-info)
 * [Setup](#setup)
 * [Run the Program](#run-the-program)
-* [Functionalities & Usages](#functionalities-&-usages)
+* [Functionalities & Usages](#functionalities&usages)
 * [Tests](#tests)
 * [Project Contributors](#project-contributors)
 * [Reference](#reference)
@@ -150,11 +150,17 @@ Now, you can use the application :)
     to the main page:
     ```
     Time out!
+    Ejecting card...
+  
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+
     Returning to the main page...
 
     --------------------------------------------------------------------
 
-    Good Afternoon, welcome to XYZ Bank! Please enter your card number:
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
     ```
     
     Note: There's no timer set for the user's response in main page.
@@ -172,11 +178,19 @@ Now, you can use the application :)
 
     ```
     Exceed the enter limit, please contact the front desk to check on your card number.
+    
+    Ejecting card...
+  
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+  
     Returning to the main page...
 
     --------------------------------------------------------------------
 
-    Good Afternoon, welcome to XYZ Bank! Please enter your card number:
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
+
     ```
     If the card number provided is not recorded in the database, an error message will be printed to the 
     terminal and then the program will return to the main page:
@@ -184,17 +198,40 @@ Now, you can use the application :)
     Sorry, this card is not recorded in our system.
     Please contact the staff.
 
+    Ejecting card...
+  
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+  
     Returning to the main page...
 
     --------------------------------------------------------------------
 
-    Good Afternoon, welcome to XYZ Bank! Please enter your card number:
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
+
     ```
   
     If the card number is legal and exists in the database, it's issue date, expire date and state will be checked.
     
     If any of above condition is invalid, a related error message will be printed out to the terminal, 
-    and the program will return to main page.
+    and the program will return to main page. Example:
+  
+    ```
+    Sorry, this card is reported stolen or lost.
+    Sorry, this card is expired.
+    Ejecting card...
+
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+
+    Returning to the main page...
+
+    --------------------------------------------------------------------
+
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
+    ```
     
   
 - ### **Check the Pin**
@@ -213,11 +250,18 @@ Now, you can use the application :)
     ```
     Sorry, you have exceeded the allowed attempts, your card is blocked.
     Please contact the staff if you need assistance.
+
+    Ejecting card...
+
+    Thank you for using XYZ Bank ATM!
+    Please don't forget to take your card.
+    Looking forward to your next visit.
+
     Returning to the main page...
 
     --------------------------------------------------------------------
 
-    Good Afternoon, welcome to XYZ Bank! Please enter your card number:
+    Good Evening, welcome to XYZ Bank! Please enter your card number:
     ```
 - ### **Choose Service**
 
@@ -249,10 +293,13 @@ Now, you can use the application :)
     --------------------------------------------------------------------
 
     End of transaction...
+  
     Ejecting card...
+  
     Thank you for using XYZ Bank ATM!
     Please don't forget to take your card.
     Looking forward to your next visit.
+  
     Returning to the main page...
 
     --------------------------------------------------------------------
@@ -292,10 +339,13 @@ Now, you can use the application :)
     --------------------------------------------------------------------
 
     End of transaction...
+  
     Ejecting card...
+  
     Thank you for using XYZ Bank ATM!
     Please don't forget to take your card.
     Looking forward to your next visit.
+  
     Returning to the main page...
 
     --------------------------------------------------------------------
@@ -334,16 +384,41 @@ Now, you can use the application :)
     page.
     ```
     End of transaction...
+  
     Ejecting card...
+  
     Thank you for using XYZ Bank ATM!
     Please don't forget to take your card.
     Looking forward to your next visit.
+  
     Returning to the main page...
 
     --------------------------------------------------------------------
 
     Good Afternoon, welcome to XYZ Bank! Please enter your card number:
     ```
+
+- ### **Invalid Service Number**
+  
+  If the user entered invalid service number for more than three times, an error message will be
+  printed in the terminal. The card will be ejected, and the program will return to the 
+  main page.
+  
+  ```
+  End of transaction...
+
+  Ejecting card...
+
+  Thank you for using XYZ Bank ATM!
+  Please don't forget to take your card.
+  Looking forward to your next visit.
+  
+  Returning to the main page...
+
+  --------------------------------------------------------------------
+
+  Good Evening, welcome to XYZ Bank! Please enter your card number:
+  ```
 
 - ### **Routine Maintenance**
   If the ATM has insufficient cash available, the transaction will be ended, cash will be added to the ATM:
@@ -355,6 +430,7 @@ Now, you can use the application :)
   Waiting staff to add cash...
 
   Cash added.
+  
   Returning to main page.
 
   --------------------------------------------------------------------
@@ -363,7 +439,7 @@ Now, you can use the application :)
   ```
 
 - ### **Terminate the Application**
-  To terminate the application, type the passcode `CLOSE` at main page.
+  To terminate the application, type the passcode `CLOSE`.
 
 
 ## **Tests**

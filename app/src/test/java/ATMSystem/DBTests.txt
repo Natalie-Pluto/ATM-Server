@@ -60,6 +60,7 @@ States: M (Matching), ! (Not operator), B (Blocked), E (Expired), I (Issued)
 14. !B,E,!I,!C:isCardInfoMatch_J14
 15. B,!E,!I,!C:isCardInfoMatch_J15
 16. !B,!E,!I,!C:isCardInfoMatch_J16
+17. !B,!E,I,!C:isCardInfoMatch_J17
 
 
 K. FIELD GETTER TESTS
@@ -75,7 +76,7 @@ BEGIN TRANSACTION;
 SET search_path to 'atmserver';
 
 INSERT INTO Card VALUES (11111, 0000, '2020-01-13', '2025-01-13', false, 10000, false); -- required for DB testing
-INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true) -- required for DB testing
+INSERT INTO Card VALUES (99901,0000,'2020-11-23','2021-1-20',true,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99902,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99903,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99904,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
@@ -83,7 +84,7 @@ INSERT INTO Card VALUES (99905,0000,'2020-11-23','2021-1-20',true,10000,true); -
 INSERT INTO Card VALUES (99906,0000,'2020-11-23','2021-1-20',false,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99907,0000,'2020-11-23','2026-1-21',true,10000,true); -- required for DB testing
 INSERT INTO Card VALUES (99908,0000,'2020-11-23','2026-1-21',false,10000,true); -- required for DB testing
-INSERT INTO Card VALUES (99909,0000,'2020-11-23','2021-1-20',true,10000,false) -- required for DB testing
+INSERT INTO Card VALUES (99909,0000,'2020-11-23','2021-1-20',true,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99910,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99911,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99912,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
@@ -91,6 +92,7 @@ INSERT INTO Card VALUES (99913,0000,'2020-11-23','2021-1-20',true,10000,false); 
 INSERT INTO Card VALUES (99914,0000,'2020-11-23','2021-1-20',false,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99915,0000,'2020-11-23','2026-1-21',true,10000,false); -- required for DB testing
 INSERT INTO Card VALUES (99916,0000,'2020-11-23','2026-1-21',false,10000,false); -- required for DB testing
+
 
 COMMIT;
 
