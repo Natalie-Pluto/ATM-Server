@@ -11,16 +11,21 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
 public class App {
     private double atmBalance;
+    private static App instance;
     public App(double atmBalance) {
         this.atmBalance = atmBalance;
     }
-    public static void main(String[] arg) throws InterruptedException {
-        App app = new App(100000);
+    public static void main(String[] args) throws InterruptedException {
+        instance = new App(100000);
+        instance.run();
+    }
+
+    public void run() throws InterruptedException {
         while (true) {
             // Greetings and ask user to insert their card for validity check.
             Calendar c = Calendar.getInstance();
             int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-            System.out.println(app.greetings(timeOfDay));
+            System.out.println(instance.greetings(timeOfDay));
             Scanner userInput = new Scanner(System.in);
             // If the service for an user is over, return to the greeting page.
             boolean isServiceOver = false;
@@ -38,9 +43,9 @@ public class App {
                     }
                 } else {
                     // 120s timer
-                    cardNumber = app.timer();
+                    cardNumber = instance.timer();
                     if (cardNumber == null) {
-                        app.timeOut();
+                        instance.timeOut();
                         break;
                     }
                 }
@@ -49,7 +54,7 @@ public class App {
                     cardEnterCounter++;
                     // User only allowed to enter 5 times
                     if (cardEnterCounter > 4) {
-                        app.illegalCardMsg();
+                        instance.illegalCardMsg();
                         break;
                     }
                     System.err.println("Invalid card number. Please enter the card number again:");
@@ -60,7 +65,7 @@ public class App {
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
                     if (!isCardExist) {
-                        app.cardNotexistMsg();
+                        instance.cardNotexistMsg();
                         break;
                     } else {
                         // Further card checking (issue & expired date)
@@ -74,9 +79,9 @@ public class App {
                         System.out.println("Please enter the pin: ");
                         while (pinCounter < 3) {
                             pinCounter++;
-                            String pin = app.timer();
+                            String pin = instance.timer();
                             if (!db.authenticate(cardNumber, pin)) {
-                                app.pinMsg(pinCounter);
+                                instance.pinMsg(pinCounter);
                                 if (pinCounter == 3) {
                                     db.setBlocked(true);
                                     break service;
@@ -91,39 +96,39 @@ public class App {
                     boolean isContinue = true;
                     int invalidCounter = 0;
                     while (isContinue) {
-                        app.serviceMsg();
+                        instance.serviceMsg();
                         // Get the input (user got 120s to choose)
-                        String service = app.timer();
+                        String service = instance.timer();
                         if (service == null) {
-                            app.timeOut();
+                            instance.timeOut();
                             break service;
                         }
                         switch (service) {
                             // Withdraw
                             case "1":
                                 System.out.println("Please enter the amount you want to withdraw:");
-                                String withdraw = app.timer();
+                                String withdraw = instance.timer();
                                 if (withdraw == null) {
-                                    app.timeOut();
+                                    instance.timeOut();
                                     break service;
                                 }
                                 // Check if the balance is enough
                                 if (db.getBalance() < Double.parseDouble(withdraw)) {
-                                    app.withdrawInsMsg(cardNumber);
+                                    instance.withdrawInsMsg(cardNumber);
                                     break;
                                 } else {
                                     // Update ATM balance
-                                    if (Double.parseDouble(withdraw) > app.getAtmBalance()) {
-                                        app.atmMsg();
+                                    if (Double.parseDouble(withdraw) > instance.getAtmBalance()) {
+                                        instance.atmMsg();
                                         // add cash to the atm
-                                        app.addAtmCash(1000000);
+                                        instance.addAtmCash(1000000);
                                         break service;
                                     } else {
                                         // Update card balance
                                         db.setBalance(db.getBalance() - Double.parseDouble(withdraw));
-                                        app.setAtmBalance(app.getAtmBalance() - Double.parseDouble(withdraw));
+                                        instance.setAtmBalance(instance.getAtmBalance() - Double.parseDouble(withdraw));
                                         // Print the receipt
-                                        app.receipt(cardNumber, Double.parseDouble(withdraw), "Withdraw", db.getBalance());
+                                        instance.receipt(cardNumber, Double.parseDouble(withdraw), "Withdraw", db.getBalance());
                                         // End of transaction
                                         endTrans();
                                         isContinue = false;
@@ -134,24 +139,24 @@ public class App {
                             case "2":
                                 // Deposit
                                 System.out.println("Please enter the amount you want to deposit:");
-                                String deposit = app.timer();
+                                String deposit = instance.timer();
                                 if (deposit == null) {
-                                    app.timeOut();
+                                    instance.timeOut();
                                     break service;
                                 }
                                 // Can't deposit coins -> check if deposit is an integer
                                 try {
                                     Integer.parseInt(deposit);
                                 } catch (NumberFormatException ex) {
-                                    app.depositMsg();
+                                    instance.depositMsg();
                                     break;
                                 }
                                 // Update card balance
                                 db.setBalance(db.getBalance() + Double.parseDouble(deposit));
                                 // Update ATM balance
-                                app.setAtmBalance(app.getAtmBalance() + Double.parseDouble(deposit));
+                                instance.setAtmBalance(instance.getAtmBalance() + Double.parseDouble(deposit));
                                 // Print the receipt
-                                app.receipt(cardNumber, Double.parseDouble(deposit), "Deposit", db.getBalance());
+                                instance.receipt(cardNumber, Double.parseDouble(deposit), "Deposit", db.getBalance());
                                 // End of transaction
                                 endTrans();
                                 isContinue = false;
@@ -159,7 +164,7 @@ public class App {
                                 break;
                             case "3":
                                 // Balance check
-                                app.balance(cardNumber);
+                                instance.balance(cardNumber);
                                 break;
                             case "4":
                                 // End of transaction
