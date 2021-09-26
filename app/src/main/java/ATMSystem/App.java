@@ -24,7 +24,7 @@ public class App {
         // Greetings and ask user to insert their card for validity check.
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-        System.out.println(instance.greetings(timeOfDay));
+        System.out.println(greetings(timeOfDay));
         Scanner userInput = new Scanner(System.in);
         while (userInput.hasNext()) {
             // If the service for an user is over, return to the greeting page.
@@ -43,9 +43,9 @@ public class App {
                     }
                 } else {
                     // 120s timer
-                    cardNumber = instance.timer();
+                    cardNumber = timer();
                     if (cardNumber == null) {
-                        instance.timeOut();
+                        timeOut();
                         break;
                     }
                 }
@@ -54,18 +54,19 @@ public class App {
                     cardEnterCounter++;
                     // User only allowed to enter 5 times
                     if (cardEnterCounter > 4) {
-                        instance.illegalCardMsg();
+                        illegalCardMsg();
                         break;
                     }
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
+                    DB db = new DB(cardNumber, "dbmasteruser", "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<",
+                            "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
                     if (!isCardExist) {
-                        instance.cardNotexistMsg();
+                        cardNotexistMsg();
                         break;
                     } else {
                         // Further card checking (issue & expired date)
@@ -80,9 +81,9 @@ public class App {
                         System.out.println("Please enter the pin: ");
                         while (pinCounter < 3) {
                             pinCounter++;
-                            String pin = instance.timer();
+                            String pin = timer();
                             if (!db.authenticate(cardNumber, pin)) {
-                                instance.pinMsg(pinCounter);
+                                pinMsg(pinCounter);
                                 if (pinCounter == 3) {
                                     db.setBlocked(true);
                                     break service;
@@ -97,39 +98,39 @@ public class App {
                     boolean isContinue = true;
                     int invalidCounter = 0;
                     while (isContinue) {
-                        instance.serviceMsg();
+                        serviceMsg();
                         // Get the input (user got 120s to choose)
-                        String service = instance.timer();
+                        String service = timer();
                         if (service == null) {
-                            instance.timeOut();
+                            timeOut();
                             break service;
                         }
                         switch (service) {
                             // Withdraw
                             case "1":
                                 System.out.println("Please enter the amount you want to withdraw:");
-                                String withdraw = instance.timer();
+                                String withdraw = timer();
                                 if (withdraw == null) {
-                                    instance.timeOut();
+                                    timeOut();
                                     break service;
                                 }
                                 // Check if the balance is enough
                                 if (db.getBalance() < Double.parseDouble(withdraw)) {
-                                    instance.withdrawInsMsg(cardNumber);
+                                    withdrawInsMsg(cardNumber);
                                     break;
                                 } else {
                                     // Update ATM balance
-                                    if (Double.parseDouble(withdraw) > instance.getAtmBalance()) {
-                                        instance.atmMsg();
+                                    if (Double.parseDouble(withdraw) > getAtmBalance()) {
+                                        atmMsg();
                                         // add cash to the atm
-                                        instance.addAtmCash(1000000);
+                                        addAtmCash(1000000);
                                         break service;
                                     } else {
                                         // Update card balance
                                         db.setBalance(db.getBalance() - Double.parseDouble(withdraw));
-                                        instance.setAtmBalance(instance.getAtmBalance() - Double.parseDouble(withdraw));
+                                        setAtmBalance(getAtmBalance() - Double.parseDouble(withdraw));
                                         // Print the receipt
-                                        instance.receipt(cardNumber, Double.parseDouble(withdraw), "Withdraw", db.getBalance());
+                                        receipt(cardNumber, Double.parseDouble(withdraw), "Withdraw", db.getBalance());
                                         // End of transaction
                                         endTrans();
                                         isContinue = false;
@@ -140,24 +141,24 @@ public class App {
                             case "2":
                                 // Deposit
                                 System.out.println("Please enter the amount you want to deposit:");
-                                String deposit = instance.timer();
+                                String deposit = timer();
                                 if (deposit == null) {
-                                    instance.timeOut();
+                                    timeOut();
                                     break service;
                                 }
                                 // Can't deposit coins -> check if deposit is an integer
                                 try {
                                     Integer.parseInt(deposit);
                                 } catch (NumberFormatException ex) {
-                                    instance.depositMsg();
+                                    depositMsg();
                                     break;
                                 }
                                 // Update card balance
                                 db.setBalance(db.getBalance() + Double.parseDouble(deposit));
                                 // Update ATM balance
-                                instance.setAtmBalance(instance.getAtmBalance() + Double.parseDouble(deposit));
+                                setAtmBalance(getAtmBalance() + Double.parseDouble(deposit));
                                 // Print the receipt
-                                instance.receipt(cardNumber, Double.parseDouble(deposit), "Deposit", db.getBalance());
+                                receipt(cardNumber, Double.parseDouble(deposit), "Deposit", db.getBalance());
                                 // End of transaction
                                 endTrans();
                                 isContinue = false;
@@ -165,7 +166,7 @@ public class App {
                                 break;
                             case "3":
                                 // Balance check
-                                instance.balance(cardNumber);
+                                balance(cardNumber);
                                 break;
                             case "4":
                                 // End of transaction
@@ -240,7 +241,7 @@ public class App {
         int i = 0;
         String str;
         do {
-            str = deque.poll(2, TimeUnit.SECONDS);
+            str = deque.poll(120, TimeUnit.SECONDS);
             i++;
         } while (i < 1);
 
@@ -379,7 +380,8 @@ public class App {
     }
 
     public void withdrawInsMsg(String cardNumber) {
-        DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
+        DB db = new DB(cardNumber, "dbmasteruser", "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<",
+                "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
         System.out.println("Insufficient balance.");
         DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
         System.out.println("Available Account Balance: $" + dollarFormat.format(db.getBalance()) + "\n");
@@ -405,7 +407,8 @@ public class App {
     }
 
     public void balance(String cardNumber) {
-        DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5433/atmserver");
+        DB db = new DB(cardNumber, "dbmasteruser", "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<",
+        "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
         DecimalFormat dollarFormat = new DecimalFormat("####,###,###.00");
         System.out.print("\n" + "\n");
         System.out.println("--------------------------------------------------------------------");

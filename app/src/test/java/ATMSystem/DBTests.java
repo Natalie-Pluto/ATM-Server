@@ -8,12 +8,11 @@ import java.util.Date;
 
 public class DBTests {
     //The test descriptions are contained in DBTests.txt.
-
     //good (valid) args
-    public static String db_url = "jdbc:postgresql://localhost:5433/atmserver";
-    public static String username = "postgres";
-    public static String password = "0000";
-    public static String pin = "0000";  
+    public static String db_url = "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres";
+    public static String username = "dbmasteruser";
+    public static String password = "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<";
+    public static String pin = "2222";
     public static String cardNumber = "11111";
 
     //bad args
@@ -310,7 +309,7 @@ public class DBTests {
     @Test public void isCardInfoMatch_J16() {
         DB x = new DB(cardNumber, username, password, db_url);
         try {
-            assertTrue(x.isCardInfoMatch("99916"));
+            assertFalse(x.isCardInfoMatch("99916"));
         } catch (InterruptedException e) {}
 
     }
