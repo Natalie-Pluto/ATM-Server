@@ -90,6 +90,9 @@ public class AppIntegrationTest {
     public void checkBalanceTest() throws InterruptedException {
         setUpOutput();
         getInput("10485" + System.lineSeparator() + "4455" + System.lineSeparator() + "3" + System.lineSeparator() + "CLOSE");
+        DB db = new DB("10000", "dbmasteruser", "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<",
+                "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
+        db.setBlocked(false);
         App.main(null);
         assertNotNull(getOutput());
     }
@@ -105,9 +108,10 @@ public class AppIntegrationTest {
     }
 
     @Test
-    public void cardexistException() {
+    public void cardexistException() throws InterruptedException {
         DB db = new DB("22222", "dbmasteruser2", "A>XV>D*7r-V{y_wL}}I{+U=8zEtjj1*TT<",
                 "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
         assertFalse(db.isCardexist("22222"));
+        assertFalse(db.isCardInfoMatch("22222"));
     }
 }

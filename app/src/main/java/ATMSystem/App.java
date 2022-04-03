@@ -16,7 +16,7 @@ public class App {
         this.atmBalance = atmBalance;
     }
     public static void main(String[] args) throws InterruptedException {
-        instance = new App(100000);
+        instance = new App(1000000);
         instance.run();
     }
 
@@ -60,8 +60,7 @@ public class App {
                     System.err.println("Invalid card number. Please enter the card number again:");
                 } else {
                     // The format of card number entered is correct, now check card validity.
-                    DB db = new DB(cardNumber, "dbmasteruser", "A>XV>D*7r-V{y_wL}}I{+U=8zEtj1*T<",
-                            "jdbc:postgresql://ls-d4381878930280384f33af335289e24c73224a04.c0apyqxz8x8m.ap-southeast-2.rds.amazonaws.com:5432/postgres");
+                    DB db = new DB(cardNumber, "postgres", "0000", "jdbc:postgresql://localhost:5432/atmserver");
                     boolean isCardExist;
                     isCardExist = db.isCardexist(cardNumber);
                     // If card not exists, output error msg to stderr and return to greeting page.
